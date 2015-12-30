@@ -1,0 +1,11 @@
+---
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: debian-8.2
+
+suites:
+  - name: default
+    run_list:
+      - sandbox_kube
