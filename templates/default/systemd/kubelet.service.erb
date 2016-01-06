@@ -1,0 +1,7 @@
+[Unit]
+Description=kubelet
+After=network.target
+
+[Service]
+User=kubernetes
+ExecStart=/usr/sbin/kubelet
