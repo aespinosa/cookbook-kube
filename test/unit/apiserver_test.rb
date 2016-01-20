@@ -35,6 +35,19 @@ class ApiServerTest < Minitest::Test
     assert_equal plugins, kube_apiserver.admission_control
   end
 
+  def test_default_admission_control_config_file_is_an_empty_string
+    assert_equal '', kube_apiserver.admission_control_config_file
+  end
+
+  def test_accepts_a_string_for_admissino_control_file
+    kube_apiserver.admission_control_config_file '/etc/some-file'
+    assert_equal '/etc/some-file', kube_apiserver.admission_control_config_file
+  end
+
+  def test_foo
+    assert_equal 'foo', KubeApiserver.properties[:admission_control].default
+  end
+
   def test_action_create_should_work
     skip 'need a real chef run context'
     kube_apiserver.run_action :create
