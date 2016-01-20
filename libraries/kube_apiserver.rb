@@ -2,6 +2,9 @@ module KubernetesCookbook
   class KubeApiserver < Chef::Resource
     resource_name :kube_apiserver
 
+    # Reference: http://kubernetes.io/v1.1/docs/admin/kube-apiserver.html
+    property :admission_control, [String, Array], default: 'AlwaysAdmit'
+
     property :run_user, String, default: 'kubernetes'
 
     default_action :create
