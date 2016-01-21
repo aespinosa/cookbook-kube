@@ -35,11 +35,11 @@ class ApiServerTest < Minitest::Test
     assert_equal plugins, kube_apiserver.admission_control
   end
 
-  def test_default_admission_control_config_file_is_an_empty_string
-    assert_equal '', kube_apiserver.admission_control_config_file
+  def test_default_admission_control_config_file_is_nil
+    assert_nil kube_apiserver.admission_control_config_file
   end
 
-  def test_accepts_a_string_for_admissino_control_file
+  def test_accepts_a_string_for_admission_control_file
     kube_apiserver.admission_control_config_file '/etc/some-file'
     assert_equal '/etc/some-file', kube_apiserver.admission_control_config_file
   end
