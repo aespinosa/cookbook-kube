@@ -5,6 +5,7 @@ module KubernetesCookbook
     # Reference: http://kubernetes.io/v1.1/docs/admin/kube-apiserver.html
     property :admission_control, [String, Array], default: 'AlwaysAdmit'
     property :admission_control_config_file, String, default: nil
+    property :advertise_address, String, default: nil
 
     property :run_user, String, default: 'kubernetes'
 

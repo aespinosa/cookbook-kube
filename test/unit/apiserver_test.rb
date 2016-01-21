@@ -44,6 +44,15 @@ class ApiServerTest < Minitest::Test
     assert_equal '/etc/some-file', kube_apiserver.admission_control_config_file
   end
 
+  def test_default_advertise_address_is_nil
+    assert_nil kube_apiserver.advertise_address
+  end
+
+  def test_accepts_an_ipaddress_string_for_advertise_address
+    kube_apiserver.advertise_address '127.0.0.1'
+    assert_equal '127.0.0.1', kube_apiserver.advertise_address
+  end
+
   def test_foo
     assert_equal 'foo', KubeApiserver.properties[:admission_control].default
   end
