@@ -52,13 +52,4 @@ class ApiServerTest < Minitest::Test
     kube_apiserver.advertise_address '127.0.0.1'
     assert_equal '127.0.0.1', kube_apiserver.advertise_address
   end
-
-  def test_foo
-    assert_equal 'foo', KubeApiserver.properties[:admission_control].default
-  end
-
-  def test_action_create_should_work
-    skip 'need a real chef run context'
-    kube_apiserver.run_action :create
-  end
 end
