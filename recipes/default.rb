@@ -60,6 +60,8 @@ kubelet_service 'default' do
   action %w(create start)
 end
 
+package 'ethtool' # needed by the kubelet
+
 kube_proxy 'default' do
   action %s(create)
 end
