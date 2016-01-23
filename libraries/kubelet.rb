@@ -34,6 +34,7 @@ module KubernetesCookbook
 
       template '/etc/systemd/system/kubelet.service' do
         source 'systemd/kubelet.service.erb' 
+        variables kubelet_command: kubelet_command
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 

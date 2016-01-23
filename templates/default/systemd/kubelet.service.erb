@@ -3,5 +3,5 @@ Description=kubelet
 After=network.target
 
 [Service]
-User=kubernetes
-ExecStart=/usr/sbin/kubelet
+# User=kubernetes
+ExecStart=<%= @kubelet_command %>

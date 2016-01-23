@@ -56,6 +56,7 @@ docker_service 'default' do
 end # needed by kubelet_service[default]
 
 kubelet_service 'default' do
+  api_servers 'http://127.0.0.1:8080'
   action %w(create start)
 end
 
