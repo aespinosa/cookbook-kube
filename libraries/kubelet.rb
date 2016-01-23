@@ -53,7 +53,7 @@ module KubernetesCookbook
       if api_servers.kind_of? Array
         cmd << " --api-servers=#{api_servers.join ','}"
       elsif api_servers.kind_of? String
-        cmd <<  "--api-servers=#{api_servers}"
+        cmd <<  " --api-servers=#{api_servers}"
       end
       cmd
     end
