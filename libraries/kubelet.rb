@@ -4,6 +4,9 @@ module KubernetesCookbook
 
     property :run_user, String, default: 'kubernetes'
 
+    # Reference: http://kubernetes.io/v1.1/docs/admin/kubelet.html 
+    property :api_servers, default: nil
+
     default_action :create
 
     action :create do
@@ -42,6 +45,16 @@ module KubernetesCookbook
       service 'kubelet' do
         action %w(enable start)
       end
+    end
+
+    def kubelet_command
+      cmd = "/usr/sbin/kubelet"
+      if api_servers.kind_of? Array
+        cmd << " --api-servers=#{api_servers.join ','}"
+      elsif api_servers.kind_of? String
+        cmd <<  "--api-servers=#{api_servers}"
+      end
+      cmd
     end
 
   end
