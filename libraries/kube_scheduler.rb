@@ -10,7 +10,7 @@ module KubernetesCookbook
       remote_file 'kube-scheduler binary' do
         path '/usr/sbin/kube-scheduler'
         mode '0755'
-        source 'http://proxy.dev:3142/HTTPS///storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-scheduler'
+        source 'https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-scheduler'
         checksum '0b56e4e8f96b51abdaf151d462fea52bf52e382ae7ed75ed262ed862530c98ae'
       end
     end

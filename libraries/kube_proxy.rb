@@ -8,7 +8,7 @@ module KubernetesCookbook
       remote_file 'kube-proxy binary' do
         path '/usr/sbin/kube-proxy'
         mode '0755'
-        source 'http://proxy.dev:3142/HTTPS///storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-proxy'
+        source 'https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-proxy'
         #checksum '62191c66f2d670dd52ddf1d88ef81048977abf1ffaa95ee6333299447eb6a482'
       end
     end

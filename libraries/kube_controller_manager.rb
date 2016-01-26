@@ -10,7 +10,7 @@ module KubernetesCookbook
       remote_file 'kube-controller-manager binary' do
         path '/usr/sbin/kube-controller-manager'
         mode '0755'
-        source 'http://proxy.dev:3142/HTTPS///storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-controller-manager'
+        source 'https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-controller-manager'
         checksum '1b011b45217005ebe776f1de1b5acec2a6ca1defa8ecbff2dc0aa16e936fc32a'
       end
     end
