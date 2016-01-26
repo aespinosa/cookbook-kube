@@ -8,4 +8,4 @@ platforms:
 suites:
   - name: default
     run_list:
-      - sandbox_kube
+      - kube_test
