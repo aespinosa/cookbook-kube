@@ -16,6 +16,7 @@ module KubernetesCookbook
     action :start do
       template '/etc/systemd/system/kube-proxy.service' do
         source 'systemd/kube-proxy.service.erb' 
+        cookbook 'kube'
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 

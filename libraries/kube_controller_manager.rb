@@ -23,6 +23,7 @@ module KubernetesCookbook
 
       template '/etc/systemd/system/kube-controller-manager.service' do
         source 'systemd/kube-controller-manager.service.erb' 
+        cookbook 'kube'
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 

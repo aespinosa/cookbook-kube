@@ -23,6 +23,7 @@ module KubernetesCookbook
 
       template '/etc/systemd/system/kube-scheduler.service' do
         source 'systemd/kube-scheduler.service.erb' 
+        cookbook 'kube'
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 

@@ -32,10 +32,12 @@ module KubernetesCookbook
 
       template '/etc/tmpfiles.d/kubernetes.conf' do
         source 'systemd/tmpfiles.erb'
+        cookbook 'kube'
       end
 
       template '/etc/systemd/system/kube-apiserver.service' do
         source 'systemd/kube-apiserver.service.erb' 
+        cookbook 'kube'
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 
