@@ -1,4 +1,5 @@
-require 'chef/resource'
+require 'cheffish/chef_run'
+require 'chef'
 
 require 'kube_apiserver'
 
@@ -51,5 +52,49 @@ class ApiServerTest < Minitest::Test
   def test_accepts_an_ipaddress_string_for_advertise_address
     kube_apiserver.advertise_address '127.0.0.1'
     assert_equal '127.0.0.1', kube_apiserver.advertise_address
+  end
+end
+
+module ProviderInspection
+  def compile_and_converge_action(&block)
+    old_run_context = @run_context
+    @run_context = @run_context.create_child
+    return_value = instance_eval(&block)
+    @inline_run_context = @run_context
+    @run_context = old_run_context
+    return_value
+  end
+
+  def inline_resources
+    @inline_run_context.resource_collection
+  end
+end
+
+module FakeCommand
+  def kube_apiserver_command
+    'fake apiserver command'
+  end
+end
+
+class ActionStartTest < Minitest::Test
+  def provider
+    @provider ||= begin
+      run = Cheffish::ChefRun.new
+      resource = run.compile_recipe do
+        kube_apiserver 'testing'
+      end
+      resource.extend FakeCommand
+      provider = resource.provider_for_action(:start)
+      provider.extend ProviderInspection
+    end
+  end
+
+  def test_passes_apiserver_command_to_systemd_unit
+    provider.action_start
+    unit = provider.inline_resources.find 'template[/etc/systemd/system'\
+        '/kube-apiserver.service]'
+
+    command = unit.variables[:kube_apiserver_command]
+    assert_equal 'fake apiserver command', command
   end
 end

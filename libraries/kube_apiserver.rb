@@ -41,6 +41,7 @@ module KubernetesCookbook
       template '/etc/systemd/system/kube-apiserver.service' do
         source 'systemd/kube-apiserver.service.erb'
         cookbook 'kube'
+        variables kube_apiserver_command: kube_apiserver_command
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 
@@ -52,6 +53,10 @@ module KubernetesCookbook
       service 'kube-apiserver' do
         action %w(enable start)
       end
+    end
+
+    def kube_apiserver_command
+      '/usr/sbin/kube-apiserver'
     end
 
     private
