@@ -1,4 +1,5 @@
 module KubernetesCookbook
+  # Resource for managing a kube-proxy
   class KubeProxy < Chef::Resource
     resource_name :kube_proxy
 
@@ -8,14 +9,16 @@ module KubernetesCookbook
       remote_file 'kube-proxy binary' do
         path '/usr/sbin/kube-proxy'
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-proxy'
-        #checksum '62191c66f2d670dd52ddf1d88ef81048977abf1ffaa95ee6333299447eb6a482'
+        source 'https://storage.googleapis.com/kubernetes-release'\
+               '/release/v1.1.3/bin/linux/amd64/kube-proxy'
+        checksum '62191c66f2d670dd52ddf1d88ef81048'\
+                 '977abf1ffaa95ee6333299447eb6a482'
       end
     end
 
     action :start do
       template '/etc/systemd/system/kube-proxy.service' do
-        source 'systemd/kube-proxy.service.erb' 
+        source 'systemd/kube-proxy.service.erb'
         cookbook 'kube'
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
@@ -29,6 +32,5 @@ module KubernetesCookbook
         action %w(enable start)
       end
     end
-
   end
 end

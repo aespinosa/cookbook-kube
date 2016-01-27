@@ -1,10 +1,11 @@
 module KubernetesCookbook
+  # Resource for instantiating a kubelet
   class KubeletService < Chef::Resource
     resource_name :kubelet_service
 
     property :run_user, String, default: 'kubernetes'
 
-    # Reference: http://kubernetes.io/v1.1/docs/admin/kubelet.html 
+    # Reference: http://kubernetes.io/v1.1/docs/admin/kubelet.html
     property :api_servers, default: nil
 
     default_action :create
@@ -13,8 +14,10 @@ module KubernetesCookbook
       remote_file 'kubelet binary' do
         path '/usr/sbin/kubelet'
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kubelet'
-        checksum '62191c66f2d670dd52ddf1d88ef81048977abf1ffaa95ee6333299447eb6a482'
+        source 'https://storage.googleapis.com/kubernetes-release'\
+               '/release/v1.1.3/bin/linux/amd64/kubelet'
+        checksum '62191c66f2d670dd52ddf1d88ef81048'\
+                 '977abf1ffaa95ee6333299447eb6a482'
       end
     end
 
@@ -34,7 +37,7 @@ module KubernetesCookbook
       end
 
       template '/etc/systemd/system/kubelet.service' do
-        source 'systemd/kubelet.service.erb' 
+        source 'systemd/kubelet.service.erb'
         cookbook 'kube'
         variables kubelet_command: kubelet_command
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
@@ -51,14 +54,13 @@ module KubernetesCookbook
     end
 
     def kubelet_command
-      cmd = "/usr/sbin/kubelet"
-      if api_servers.kind_of? Array
+      cmd = '/usr/sbin/kubelet'
+      if api_servers.is_a? Array
         cmd << " --api-servers=#{api_servers.join ','}"
-      elsif api_servers.kind_of? String
-        cmd <<  " --api-servers=#{api_servers}"
+      elsif api_servers.is_a? String
+        cmd << " --api-servers=#{api_servers}"
       end
       cmd
     end
-
   end
 end

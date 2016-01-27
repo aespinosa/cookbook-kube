@@ -18,11 +18,13 @@ class KubeletTest < Minitest::Test
 
   def test_kubelet_command_with_apiserver_flags
     kubelet.api_servers 'http://127.0.0.1:8080'
-    assert_match %r{--api-servers=http://127.0.0.1:8080}, kubelet.kubelet_command
+    assert_match %r{--api-servers=http://127.0.0.1:8080},
+                 kubelet.kubelet_command
   end
 
   def test_multiple_apiservers
     kubelet.api_servers %w(http://127.0.0.1:8080 https://10.0.0.1:6443)
-    assert_match %r{--api-servers=http://127.0.0.1:8080,https://10.0.0.1:6443}, kubelet.kubelet_command
+    assert_match %r{--api-servers=http://127.0.0.1:8080,https://10.0.0.1:6443},
+                 kubelet.kubelet_command
   end
 end

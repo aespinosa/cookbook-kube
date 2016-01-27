@@ -1,4 +1,5 @@
 module KubernetesCookbook
+  # Resource to manage a scheduler
   class KubeScheduler < Chef::Resource
     resource_name :kube_scheduler
 
@@ -10,8 +11,10 @@ module KubernetesCookbook
       remote_file 'kube-scheduler binary' do
         path '/usr/sbin/kube-scheduler'
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-scheduler'
-        checksum '0b56e4e8f96b51abdaf151d462fea52bf52e382ae7ed75ed262ed862530c98ae'
+        source 'https://storage.googleapis.com/kubernetes-release'\
+               '/release/v1.1.3/bin/linux/amd64/kube-scheduler'
+        checksum '0b56e4e8f96b51abdaf151d462fea52b'\
+                 'f52e382ae7ed75ed262ed862530c98ae'
       end
     end
 
@@ -22,7 +25,7 @@ module KubernetesCookbook
       end
 
       template '/etc/systemd/system/kube-scheduler.service' do
-        source 'systemd/kube-scheduler.service.erb' 
+        source 'systemd/kube-scheduler.service.erb'
         cookbook 'kube'
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
@@ -35,7 +38,6 @@ module KubernetesCookbook
       service 'kube-scheduler' do
         action %w(enable start)
       end
-
     end
   end
 end

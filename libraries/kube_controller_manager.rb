@@ -1,4 +1,5 @@
 module KubernetesCookbook
+  # Resource for managing the Controller Manager
   class KubeControllerManager < Chef::Resource
     resource_name :kube_controller_manager
 
@@ -10,8 +11,10 @@ module KubernetesCookbook
       remote_file 'kube-controller-manager binary' do
         path '/usr/sbin/kube-controller-manager'
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-controller-manager'
-        checksum '1b011b45217005ebe776f1de1b5acec2a6ca1defa8ecbff2dc0aa16e936fc32a'
+        source 'https://storage.googleapis.com/kubernetes-release'\
+               '/release/v1.1.3/bin/linux/amd64/kube-controller-manager'
+        checksum '1b011b45217005ebe776f1de1b5acec2'\
+                 'a6ca1defa8ecbff2dc0aa16e936fc32a'
       end
     end
 
@@ -22,7 +25,7 @@ module KubernetesCookbook
       end
 
       template '/etc/systemd/system/kube-controller-manager.service' do
-        source 'systemd/kube-controller-manager.service.erb' 
+        source 'systemd/kube-controller-manager.service.erb'
         cookbook 'kube'
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
@@ -35,7 +38,6 @@ module KubernetesCookbook
       service 'kube-controller-manager' do
         action %w(enable start)
       end
-
     end
   end
 end

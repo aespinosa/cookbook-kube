@@ -1,4 +1,5 @@
 module KubernetesCookbook
+  # Resource to manage a Kubernetes API server
   class KubeApiserver < Chef::Resource
     resource_name :kube_apiserver
 
@@ -15,8 +16,10 @@ module KubernetesCookbook
       remote_file 'kube-apiserver binary' do
         path '/usr/sbin/kube-apiserver'
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release/release/v1.1.3/bin/linux/amd64/kube-apiserver'
-        checksum '9eb61318ca422031ee1ec7ef12c81aa1ae11feb0c26bece5aa6c3d3698017e51'
+        source 'https://storage.googleapis.com/kubernetes-release'\
+               '/release/v1.1.3/bin/linux/amd64/kube-apiserver'
+        checksum '9eb61318ca422031ee1ec7ef12c81aa1'\
+                 'ae11feb0c26bece5aa6c3d3698017e51'
       end
     end
 
@@ -36,7 +39,7 @@ module KubernetesCookbook
       end
 
       template '/etc/systemd/system/kube-apiserver.service' do
-        source 'systemd/kube-apiserver.service.erb' 
+        source 'systemd/kube-apiserver.service.erb'
         cookbook 'kube'
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
