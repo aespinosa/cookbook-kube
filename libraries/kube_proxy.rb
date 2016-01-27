@@ -11,8 +11,8 @@ module KubernetesCookbook
         mode '0755'
         source 'https://storage.googleapis.com/kubernetes-release'\
                '/release/v1.1.3/bin/linux/amd64/kube-proxy'
-        checksum '62191c66f2d670dd52ddf1d88ef81048'\
-                 '977abf1ffaa95ee6333299447eb6a482'
+        checksum 'b6f1cd2fc55f81bd700b92490a8be950'\
+                 '446bd494067d1ed2a3ed9cc2ecf059f8'
       end
     end
 
