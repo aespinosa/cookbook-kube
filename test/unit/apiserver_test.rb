@@ -98,3 +98,51 @@ class ActionStartTest < Minitest::Test
     assert_equal 'fake apiserver command', command
   end
 end
+
+class CommandTest < Minitest::Test
+  def kube_apiserver(&block)
+    @resource ||= begin
+      resource = KubernetesCookbook::KubeApiserver.new 'command test'
+      resource.instance_eval(&block) if block
+      resource
+    end
+  end
+
+  def test_default_properties_values_renders_no_flags
+    assert_equal '/usr/sbin/kube-apiserver',
+                 kube_apiserver.kube_apiserver_command
+  end
+
+  def test_array_flags_become_comma_separated_arguments
+    kube_apiserver do
+      admission_control %w(AlwaysDeny ServiceQuota) # An array flag
+    end
+
+    assert_equal '/usr/sbin/kube-apiserver '\
+        '--admission-control=AlwaysDeny,ServiceQuota',
+                 kube_apiserver.kube_apiserver_command
+  end
+
+  def test_multiple_flags_are_set
+    kube_apiserver do
+      admission_control %w(AlwaysDeny ServiceQuota)
+      advertise_address '100.2.3.4'
+    end
+
+    assert_equal '/usr/sbin/kube-apiserver '\
+        '--admission-control=AlwaysDeny,ServiceQuota '\
+        '--advertise-address=100.2.3.4',
+                 kube_apiserver.kube_apiserver_command
+  end
+
+  def test_non_commandline_flag_properties_are_excluded
+    kube_apiserver do
+      run_user 'another-user' # non-commandline flag
+      admission_control %w(AlwaysDeny ServiceQuota) # commandline flag
+    end
+
+    assert_equal '/usr/sbin/kube-apiserver '\
+        '--admission-control=AlwaysDeny,ServiceQuota',
+                 kube_apiserver.kube_apiserver_command
+  end
+end

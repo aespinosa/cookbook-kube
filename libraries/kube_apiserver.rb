@@ -55,8 +55,26 @@ module KubernetesCookbook
       end
     end
 
+    def non_commandline_property?(property)
+      [:name, :run_user].include? property
+    end
+
+    def list_commandline_flag_properties
+      self.class.properties.reject do |property, description|
+        value = send(property)
+        non_commandline_property?(property) || (value == description.default)
+      end
+    end
+
     def kube_apiserver_command
-      '/usr/sbin/kube-apiserver'
+      actual_flags = list_commandline_flag_properties.map do |property, _|
+        value = send(property)
+        value = value.join ',' if value.is_a? Array
+        "--#{property.to_s.tr('_', '-')}=#{value}"
+      end
+      actual_flags.reduce '/usr/sbin/kube-apiserver' do |command, flag|
+        command << " #{flag}"
+      end
     end
 
     private
