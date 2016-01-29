@@ -108,12 +108,12 @@ class CommandTest < Minitest::Test
     end
   end
 
-  def test_default_properties_values_renders_no_flags
+  def test_default_property_values_renders_no_flags
     assert_equal '/usr/sbin/kube-apiserver',
                  kube_apiserver.kube_apiserver_command
   end
 
-  def test_array_flags_become_comma_separated_arguments
+  def test_array_values_become_comma_separated_arguments
     kube_apiserver do
       admission_control %w(AlwaysDeny ServiceQuota) # An array flag
     end
