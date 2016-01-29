@@ -145,4 +145,28 @@ class CommandTest < Minitest::Test
         '--admission-control=AlwaysDeny,ServiceQuota',
                  kube_apiserver.kube_apiserver_command
   end
+
+  # rubocop:disable Metrics/LineLength, Style/AsciiComments
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # しかたない
+  # Demo of
+  # https://github.com/kubernetes/kubernetes/blob/master/cluster/images/hyperkube/master-multi.json#L30-L44
+  def test_master_multi_port
+    kube_apiserver do
+      service_cluster_ip_range '10.0.0.1/24'
+      insecure_bind_address '0.0.0.0'
+      etcd_servers 'http://127.0.0.1:4001'
+      admission_control %w(NamespaceLifecycle LimitRanger SecurityContextDeny ServiceAccount ResourceQuota)
+      client_ca_file '/srv/kubernetes/ca.crt'
+      basic_auth_file '/srv/kubernetes/basic_auth.csv'
+      min_request_timeout 300
+      tls_cert_file '/srv/kubernetes/server.cert'
+      tls_private_key_file '/srv/kubernetes/server.key'
+      token_auth_file '/srv/kubernetes/known_tokens.csv'
+      allow_privileged true
+      v 4
+    end
+
+    assert_match(/--v=4/, kube_apiserver.kube_apiserver_command)
+  end
 end
