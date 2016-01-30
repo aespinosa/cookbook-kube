@@ -27,7 +27,7 @@ module KubernetesCookbook
       template '/etc/systemd/system/kube-scheduler.service' do
         source 'systemd/kube-scheduler.service.erb'
         cookbook 'kube'
-        variables kube_scheduler_command: kube_scheduler_command
+        variables kube_scheduler_command: generator.generate
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 
@@ -41,9 +41,8 @@ module KubernetesCookbook
       end
     end
 
-    def kube_scheduler_command
-      generator = CommandGenerator.new '/usr/sbin/kube-scheduler', self
-      generator.generate
+    def generator
+      CommandGenerator.new('/usr/sbin/kube-scheduler', self)
     end
   end
 

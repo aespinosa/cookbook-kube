@@ -36,7 +36,7 @@ module KubernetesCookbook
       template '/etc/systemd/system/kube-apiserver.service' do
         source 'systemd/kube-apiserver.service.erb'
         cookbook 'kube'
-        variables kube_apiserver_command: kube_apiserver_command
+        variables kube_apiserver_command: generator.generate
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 
@@ -50,9 +50,8 @@ module KubernetesCookbook
       end
     end
 
-    def kube_apiserver_command
-      generator = CommandGenerator.new '/usr/sbin/kube-apiserver', self
-      generator.generate
+    def generator
+      CommandGenerator.new '/usr/sbin/kube-apiserver', self
     end
 
     private
