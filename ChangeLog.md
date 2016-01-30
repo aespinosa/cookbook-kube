@@ -1,3 +1,7 @@
+# 0.2.0
+
+* Complete commandline flags as resource properties for all the custom resources:
+
 # 0.1.1
 
 * Specify the cookbook in inline templates
