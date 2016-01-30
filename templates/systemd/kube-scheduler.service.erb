@@ -4,4 +4,4 @@ After=network.target
 
 [Service]
 User=kubernetes
-ExecStart=/usr/sbin/kube-scheduler
+ExecStart=<%= @kube_scheduler_command %>

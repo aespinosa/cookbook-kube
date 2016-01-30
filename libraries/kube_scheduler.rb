@@ -27,6 +27,7 @@ module KubernetesCookbook
       template '/etc/systemd/system/kube-scheduler.service' do
         source 'systemd/kube-scheduler.service.erb'
         cookbook 'kube'
+        variables kube_scheduler_command: kube_scheduler_command
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 
@@ -38,6 +39,10 @@ module KubernetesCookbook
       service 'kube-scheduler' do
         action %w(enable start)
       end
+    end
+
+    def kube_scheduler_command
+      raise 'write me'
     end
   end
 end
