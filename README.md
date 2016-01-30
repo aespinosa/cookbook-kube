@@ -3,12 +3,12 @@
 Library cookbook for managing various components of a Kubernetes cluster as Chef
 resources.
 
-# Custome Resources
+# Custom Resources
 
 Components for a kubernetes node:
 
 * kubelet
-* kube-proxy
+* kube_proxy
 
 Components for a kubernetes master:
 
