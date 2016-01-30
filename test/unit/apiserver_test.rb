@@ -1,6 +1,7 @@
 require 'cheffish/chef_run'
 require 'chef'
 
+require 'command_generator'
 require 'kube_apiserver'
 
 require 'minitest/autorun'

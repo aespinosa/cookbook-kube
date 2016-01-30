@@ -42,7 +42,24 @@ module KubernetesCookbook
     end
 
     def kube_scheduler_command
-      raise 'write me'
+      generator = CommandGenerator.new '/usr/sbin/kube-scheduler', self
+      generator.generate
     end
+  end
+
+  # scheduler commandline flags
+  # Reference: http://kubernetes.io/v1.1/docs/admin/kube-scheduler.html
+  class KubeScheduler < Chef::Resource
+    property :address, default: '127.0.0.1'
+    property :algorithm_provider, default: 'DefaultProvider'
+    property :bind_pods_burst, default: 100
+    property :bind_pods_qps, default: 50
+    property :google_json_key
+    property :kubeconfig
+    property :log_flush_frequency, default: '5s'
+    property :master
+    property :policy_config_file
+    property :port, default: 10_251
+    property :profiling, default: true
   end
 end
