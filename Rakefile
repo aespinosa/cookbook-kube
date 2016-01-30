@@ -4,6 +4,7 @@ require 'kitchen/rake_tasks'
 
 Rake::TestTask.new do |t|
   t.libs = %w(libraries)
+  t.ruby_opts << '-rsimplecov' if ENV['COVERAGE']
   t.test_files = FileList['test/unit/*_test.rb']
   t.verbose = true
 end
