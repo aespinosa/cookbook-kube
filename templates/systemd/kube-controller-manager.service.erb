@@ -5,4 +5,4 @@ After=network.target
 [Service]
 Type=simple
 User=kubernetes
-ExecStart=/usr/sbin/kube-controller-manager
+ExecStart=<%= @kube_controller_manager_command %>
