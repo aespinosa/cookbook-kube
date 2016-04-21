@@ -21,6 +21,7 @@ end # Needed by the kube_apiserver[default]
 kube_apiserver 'default' do
   service_cluster_ip_range '10.0.0.1/24'
   etcd_servers 'http://127.0.0.1:4001'
+  insecure_bind_address '0.0.0.0' # for convenience
   action %w(create start)
 end
 
@@ -41,16 +42,22 @@ end
 include_recipe 'apt'
 
 apt_repository 'docker' do
-  uri 'http://proxy.dev:3142/apt.dockerproject.org/repo'
-  components %w(debian-jessie main)
+  uri 'https://apt.dockerproject.org/repo'
+  distribution 'debian-jessie'
+  components %w(main)
   keyserver 'p80.pool.sks-keyservers.net'
   key '58118E89F3A912897C070ADBF76221572C52609D'
   cache_rebuild true
 end
 
 flannel_service 'default' do
+  configuration 'Network' => '10.10.0.1/16'
   action %w(create start)
 end.extend FlannelCookbook::SubnetParser
+
+directory '/etc/kubernetes/manifests' do
+  recursive true
+end
 
 docker_service 'default' do
   bip lazy { resources('flannel_service[default]').subnetfile_subnet }
@@ -61,11 +68,23 @@ end # needed by kubelet_service[default]
 
 kubelet_service 'default' do
   api_servers 'http://127.0.0.1:8080'
+  config '/etc/kubernetes/manifests'
+  cluster_dns '10.0.0.10'
+  cluster_domain 'cluster.local'
   action %w(create start)
 end
 
 package 'ethtool' # needed by the kubelet
 
 kube_proxy 'default' do
-  action %s(create)
+  action %w(create start)
+end
+
+# test running a sample pod
+
+t = template '/etc/kubernetes/manifests/busybox.yaml'
+
+execute 'kubectl create -f /etc/kubernetes/manifests/busybox.yaml' do
+  action :nothing
+  subscribes :run, "template[#{t.name}]", :immediately
 end

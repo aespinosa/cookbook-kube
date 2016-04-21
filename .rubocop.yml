@@ -1,0 +1,3 @@
+Metrics/MethodLength:
+  Enabled: true
+  Max: 12

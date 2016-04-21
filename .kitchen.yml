@@ -1,6 +1,17 @@
 ---
+# configure kitchen driver in ~/.kitchen/config.yml or uncomment below:
+#driver:
+#  name: vagrant
+#  customize:
+#    memory: 1024
+
+verifier:
+  name: inspec
+  format: doc
+
 provisioner:
   name: chef_zero
+  require_chef_omnibus: true
 
 platforms:
   - name: debian-8.2
