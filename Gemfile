@@ -10,7 +10,9 @@ group :lint do
 end
 
 group :unit do
-  # gem 'cheffish',   '~> 2.0'
+  gem 'minitest', '~> 5.0'
+  gem 'cheffish', '~> 2.0'
+  gem 'chef', '~> 12.9'
 end
 
 group :kitchen_common do
