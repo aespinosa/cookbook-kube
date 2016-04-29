@@ -16,7 +16,7 @@ group :unit do
 end
 
 group :kitchen_common do
-  gem 'berkshelf',  '~> 4.0'
+  gem 'berkshelf', '~> 4.0'
   gem 'test-kitchen', '~> 1.7'
   gem 'kitchen-sync'
   gem 'kitchen-inspec'
