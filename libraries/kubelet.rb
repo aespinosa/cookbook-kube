@@ -3,6 +3,10 @@ module KubernetesCookbook
   class KubeletService < Chef::Resource
     resource_name :kubelet_service
 
+    property :version, String, default: '1.2.4'
+    property :checksum, String,
+      default: '4adaf40592248eef6fd4fa126464915e' +
+               'a41e624a70dc77178089760ed235e341'
     property :run_user, String, default: 'kubernetes'
 
     # Reference: http://kubernetes.io/v1.1/docs/admin/kubelet.html
@@ -14,10 +18,9 @@ module KubernetesCookbook
       remote_file 'kubelet binary' do
         path '/usr/sbin/kubelet'
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release'\
-               '/release/v1.1.3/bin/linux/amd64/kubelet'
-        checksum '62191c66f2d670dd52ddf1d88ef81048'\
-                 '977abf1ffaa95ee6333299447eb6a482'
+        source "https://storage.googleapis.com/kubernetes-release" \
+               "/release/v#{version}/bin/linux/amd64/kubelet"
+        checksum new_resource.checksum
       end
     end
 
