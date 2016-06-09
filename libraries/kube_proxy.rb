@@ -3,16 +3,21 @@ module KubernetesCookbook
   class KubeProxy < Chef::Resource
     resource_name :kube_proxy
 
+    property :remote, String,
+      default: 'https://storage.googleapis.com/kubernetes-release' +
+               '/release/v1.2.4/bin/linux/amd64/kube-proxy'
+    property :checksum, String,
+      default: '2f45f95fd48f4bfd7f988ece19ae06c6' +
+               '8f161e9628dd6a495a5a867f14936917'
+               
     default_action :create
 
     action :create do
       remote_file 'kube-proxy binary' do
-        path '/usr/sbin/kube-proxy'
+        path proxy_path
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release'\
-               '/release/v1.1.3/bin/linux/amd64/kube-proxy'
-        checksum 'b6f1cd2fc55f81bd700b92490a8be950'\
-                 '446bd494067d1ed2a3ed9cc2ecf059f8'
+        source new_resource.remote
+        checksum new_resource.checksum
       end
     end
 
@@ -35,7 +40,11 @@ module KubernetesCookbook
     end
 
     def generator
-      CommandGenerator.new '/usr/sbin/kube-proxy', self
+      CommandGenerator.new proxy_path, self
+    end
+
+    def proxy_path
+      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
     end
   end
 

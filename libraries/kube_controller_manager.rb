@@ -3,18 +3,22 @@ module KubernetesCookbook
   class KubeControllerManager < Chef::Resource
     resource_name :kube_controller_manager
 
+    property :remote, String,
+      default: 'https://storage.googleapis.com/kubernetes-release' +
+               '/release/v1.2.4/bin/linux/amd64/kube-controller-manager'
+    property :checksum, String,
+      default: '3cf545cd53a1f97525e47783ff608b1a' +
+               '9d753298aad5cea04712351e81144884'
     property :run_user, String, default: 'kubernetes'
 
     default_action :create
 
     action :create do
       remote_file 'kube-controller-manager binary' do
-        path '/usr/sbin/kube-controller-manager'
+        path controller_manager_path
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release'\
-               '/release/v1.1.3/bin/linux/amd64/kube-controller-manager'
-        checksum '1b011b45217005ebe776f1de1b5acec2'\
-                 'a6ca1defa8ecbff2dc0aa16e936fc32a'
+        source new_resource.remote
+        checksum new_resource.checksum
       end
     end
 
@@ -42,7 +46,11 @@ module KubernetesCookbook
     end
 
     def generator
-      CommandGenerator.new '/usr/sbin/kube-controller-manager', self
+      CommandGenerator.new controller_manager_path, self
+    end
+
+    def controller_manager_path
+      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
     end
   end
 

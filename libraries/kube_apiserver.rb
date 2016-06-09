@@ -3,18 +3,22 @@ module KubernetesCookbook
   class KubeApiserver < Chef::Resource
     resource_name :kube_apiserver
 
+    property :remote, String,
+      default: 'https://storage.googleapis.com/kubernetes-release' +
+               '/release/v1.2.4/bin/linux/amd64/kube-apiserver'
+    property :checksum, String,
+      default: '6ac99b36b02968459e026fcfc234207c' +
+               '66064b5e11816b69dd8fc234b2ffec1e'
     property :run_user, String, default: 'kubernetes'
 
     default_action :create
 
     action :create do
       remote_file 'kube-apiserver binary' do
-        path '/usr/sbin/kube-apiserver'
+        path apiserver_path
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release'\
-               '/release/v1.1.3/bin/linux/amd64/kube-apiserver'
-        checksum '9eb61318ca422031ee1ec7ef12c81aa1'\
-                 'ae11feb0c26bece5aa6c3d3698017e51'
+        source new_resource.remote
+        checksum new_resource.checksum
       end
     end
 
@@ -51,7 +55,11 @@ module KubernetesCookbook
     end
 
     def generator
-      CommandGenerator.new '/usr/sbin/kube-apiserver', self
+      CommandGenerator.new apiserver_path, self
+    end
+
+    def apiserver_path
+      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
     end
 
     private

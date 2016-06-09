@@ -3,6 +3,12 @@ module KubernetesCookbook
   class KubeletService < Chef::Resource
     resource_name :kubelet_service
 
+    property :remote, String,
+      default: 'https://storage.googleapis.com/kubernetes-release' +
+               '/release/v1.2.4/bin/linux/amd64/kubelet'
+    property :checksum, String,
+      default: '4adaf40592248eef6fd4fa126464915e' +
+               'a41e624a70dc77178089760ed235e341'
     property :run_user, String, default: 'kubernetes'
 
     # Reference: http://kubernetes.io/v1.1/docs/admin/kubelet.html
@@ -12,12 +18,10 @@ module KubernetesCookbook
 
     action :create do
       remote_file 'kubelet binary' do
-        path '/usr/sbin/kubelet'
+        path kubelet_path
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release'\
-               '/release/v1.1.3/bin/linux/amd64/kubelet'
-        checksum '62191c66f2d670dd52ddf1d88ef81048'\
-                 '977abf1ffaa95ee6333299447eb6a482'
+        source new_resource.remote
+        checksum new_resource.checksum
       end
     end
 
@@ -53,8 +57,12 @@ module KubernetesCookbook
       end
     end
 
+    def kubelet_path
+      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
+    end
+
     def kubelet_command
-      generator = CommandGenerator.new '/usr/sbin/kubelet', self
+      generator = CommandGenerator.new kubelet_path, self
       generator.generate
     end
   end

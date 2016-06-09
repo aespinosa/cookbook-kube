@@ -3,18 +3,22 @@ module KubernetesCookbook
   class KubeScheduler < Chef::Resource
     resource_name :kube_scheduler
 
+    property :remote, String,
+      default: 'https://storage.googleapis.com/kubernetes-release' +
+               '/release/v1.2.4/bin/linux/amd64/kube-scheduler'
+    property :checksum, String,
+      default: 'b7b36970354bd3b681d06399104e1c8d' +
+               '402a55134c0dc9269a485b62c6a5ce6b'
     property :run_user, String, default: 'kubernetes'
 
     default_action :create
 
     action :create do
       remote_file 'kube-scheduler binary' do
-        path '/usr/sbin/kube-scheduler'
+        path scheduler_path
         mode '0755'
-        source 'https://storage.googleapis.com/kubernetes-release'\
-               '/release/v1.1.3/bin/linux/amd64/kube-scheduler'
-        checksum '0b56e4e8f96b51abdaf151d462fea52b'\
-                 'f52e382ae7ed75ed262ed862530c98ae'
+        source new_resource.remote
+        checksum new_resource.checksum
       end
     end
 
@@ -42,7 +46,11 @@ module KubernetesCookbook
     end
 
     def generator
-      CommandGenerator.new('/usr/sbin/kube-scheduler', self)
+      CommandGenerator.new(scheduler_path, self)
+    end
+
+    def scheduler_path
+      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
     end
   end
 
