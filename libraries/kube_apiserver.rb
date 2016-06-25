@@ -59,7 +59,7 @@ module KubernetesCookbook
     end
 
     def apiserver_path
-      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
+      '/usr/sbin/kube-apiserver'
     end
 
     private
