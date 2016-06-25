@@ -56,19 +56,51 @@ class ApiServerTest < Minitest::Test
   end
 end
 
-class ActionStartTest < Minitest::Test
+module Provider
   require_relative 'provider_helper'
 
-  def provider
+  def provider(action = :start, &block)
     @provider ||= begin
       run = Cheffish::ChefRun.new
       resource = run.compile_recipe do
-        kube_apiserver 'testing'
+        kube_apiserver 'testing', &block
       end
-      provider = resource.provider_for_action(:start)
+      provider = resource.provider_for_action(:create)
       provider.extend ProviderInspection
     end
   end
+end
+
+class ActionCreateTest < Minitest::Test
+  include Provider
+
+  def test_passes_the_source_remote
+    provider do
+      remote 'https://somewhere/kube-apiserver'
+    end
+
+    provider.action_create
+
+    binary = provider.inline_resources.find 'remote_file[kube-apiserver binary]'
+
+    assert_equal 'https:///kube-apiserver', binary.source
+  end
+
+  def test_passes_the_source_remote
+    provider :create do
+      checksum 'the-checksum'
+    end
+
+    provider.action_create
+
+    binary = provider.inline_resources.find 'remote_file[kube-apiserver binary]'
+
+    assert_equal 'the-checksum', binary.checksum
+  end
+end
+
+class ActionStartTest < Minitest::Test
+  include Provider
 
   def test_passes_apiserver_command_to_systemd_unit
     provider.action_start
