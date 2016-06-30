@@ -52,7 +52,7 @@ module KubernetesCookbook
     end
 
     def controller_manager_path
-      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
+      '/usr/sbin/kube-controller-manager'
     end
   end
 

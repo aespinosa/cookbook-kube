@@ -50,7 +50,7 @@ module KubernetesCookbook
     end
 
     def scheduler_path
-      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
+      '/usr/sbin/kube-scheduler'
     end
   end
 

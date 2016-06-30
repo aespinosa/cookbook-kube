@@ -60,7 +60,7 @@ module KubernetesCookbook
     end
 
     def kubelet_path
-      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
+      '/usr/sbin/kubelet'
     end
 
     def kubelet_command
