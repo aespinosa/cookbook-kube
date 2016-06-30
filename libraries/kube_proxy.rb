@@ -44,7 +44,7 @@ module KubernetesCookbook
     end
 
     def proxy_path
-      ::File.join('/usr/sbin', PathNameHelper.kubernetes_file(remote))
+      '/usr/sbin/kube-proxy'
     end
   end
 
