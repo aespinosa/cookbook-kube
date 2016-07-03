@@ -3,4 +3,4 @@ Description=kube-proxy
 After=network.target
 
 [Service]
-ExecStart=/usr/sbin/kube-proxy
+ExecStart=<%= @kube_proxy_command %>
