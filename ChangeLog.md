@@ -1,3 +1,8 @@
+# 0.3.0
+
+* Introduce `remote` and `checksum` properties for downloading the binaries
+* Fix hard-wired kube-proxy command in its systemd unit
+
 # 0.2.0
 
 * Complete commandline flags as resource properties for all the custom resources:
