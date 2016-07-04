@@ -1,3 +1,5 @@
+require_relative 'command_generator'
+
 module KubernetesCookbook
   # Resource for managing the Controller Manager
   class KubeControllerManager < Chef::Resource

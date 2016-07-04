@@ -1,3 +1,6 @@
+require 'chef'
+require 'cheffish/chef_run'
+
 require 'kube_controller_manager'
 
 require 'minitest/autorun'
@@ -38,5 +41,13 @@ class ActionTest < Minitest::Test
 
     command = unit.variables[:kube_controller_manager_command]
     assert_equal '/usr/sbin/kube-controller-manager', command
+  end
+
+  def test_downloads_the_binary
+    provider.action_create
+    download = provider.inline_resources.find 'remote_file[kube-'\
+        'controller-manager binary]'
+
+    assert_equal '/usr/sbin/kube-controller-manager', download.path
   end
 end
