@@ -1,4 +1,5 @@
 require 'command_generator'
+require 'chef'
 require 'kube_apiserver'
 
 require 'minitest/autorun'
@@ -49,8 +50,12 @@ class CommandGeneratorTest < Minitest::Test
 
   def test_non_commandline_flag_properties_are_excluded
     resource do
-      run_user 'another-user' # non-commandline flag
-      admission_control %w(AlwaysDeny ServiceQuota) # commandline flag
+      # non-commandline flag
+      run_user 'another-user'
+      remote 'a-url'
+      checksum 'a-checksum'
+      # commandline flag
+      admission_control %w(AlwaysDeny ServiceQuota)
     end
 
     assert_equal '/the-command '\
