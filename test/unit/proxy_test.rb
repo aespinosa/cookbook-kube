@@ -1,4 +1,6 @@
 require 'command_generator'
+require 'chef'
+require 'cheffish/chef_run'
 require 'kube_proxy'
 
 require 'minitest/autorun'
@@ -39,5 +41,13 @@ class KubeProxyActionTest < Minitest::Test
 
     command = unit.variables[:kube_proxy_command]
     assert_equal '/usr/sbin/kube-proxy', command
+  end
+
+  def test_downloads_the_kube_proxy_binary
+    provider.action_create
+
+    download = provider.inline_resources.find 'remote_file[kube-proxy binary]'
+
+    assert_equal '/usr/sbin/kube-proxy', download.path
   end
 end
