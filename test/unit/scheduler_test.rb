@@ -1,4 +1,8 @@
 require 'command_generator'
+
+require 'chef'
+require 'cheffish/chef_run'
+
 require 'kube_scheduler'
 
 require 'minitest/autorun'
@@ -17,7 +21,7 @@ class SchedulerTest < Minitest::Test
   end
 end
 
-class ActionStart < Minitest::Test
+class ActionTest < Minitest::Test
   require_relative 'provider_helper'
 
   def provider
@@ -39,5 +43,14 @@ class ActionStart < Minitest::Test
 
     command = unit.variables[:kube_scheduler_command]
     assert_equal '/usr/sbin/kube-scheduler', command
+  end
+
+  def test_downloads_scheduler_binary
+    provider.action_create
+
+    download = provider.inline_resources.find 'remote_file[kube-scheduler '\
+        'binary]'
+
+    assert_equal '/usr/sbin/kube-scheduler', download.path
   end
 end
