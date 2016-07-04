@@ -1,4 +1,6 @@
-require 'chef/resource'
+require 'chef'
+require 'cheffish/chef_run'
+
 require 'kubelet'
 
 require 'minitest/autorun'
@@ -69,5 +71,12 @@ class KubeletActionStartTest < Minitest::Test
 
     assert_match %r{--api-servers=http://127.0.0.1:8080,https://10.0.0.1:6443},
                  command
+  end
+
+  def test_download_binary
+    provider.action_create
+    download = provider.inline_resources.find 'remote_file[kubelet binary]'
+
+    assert_equal '/usr/sbin/kubelet', download.path
   end
 end

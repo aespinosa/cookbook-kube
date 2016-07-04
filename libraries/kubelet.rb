@@ -1,3 +1,5 @@
+require_relative 'command_generator'
+
 module KubernetesCookbook
   # Resource for instantiating a kubelet
   class KubeletService < Chef::Resource
