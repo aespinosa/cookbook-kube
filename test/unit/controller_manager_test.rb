@@ -19,7 +19,7 @@ class ControllerManagerTest < Minitest::Test
   end
 end
 
-class ActionTest < Minitest::Test
+class ControllerManagerActionTest < Minitest::Test
   require_relative 'provider_helper'
 
   def provider
