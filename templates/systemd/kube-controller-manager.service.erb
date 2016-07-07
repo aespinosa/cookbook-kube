@@ -1,8 +1,12 @@
 [Unit]
 Description=kube-controller-manager
+Documentation=https://k8s.io
 After=network.target
 
 [Service]
 Type=simple
 User=kubernetes
 ExecStart=<%= @kube_controller_manager_command %>
+
+[Install]
+WantedBy=multi-user.target

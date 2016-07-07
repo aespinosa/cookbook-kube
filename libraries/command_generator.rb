@@ -20,7 +20,10 @@ module KubernetesCookbook
     private
 
     def non_commandline_property?(property)
-      [:name, :run_user, :remote, :checksum].include? property
+      [
+        :name, :run_user, :remote, :checksum,
+        :container_runtime_service,
+      ].include? property
     end
 
     def list_commandline_flag_properties

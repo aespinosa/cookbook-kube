@@ -11,6 +11,7 @@ module KubernetesCookbook
     property :checksum, String,
       default: '4adaf40592248eef6fd4fa126464915e' +
                'a41e624a70dc77178089760ed235e341'
+    property :container_runtime_service, String, default: 'docker.service'
     property :run_user, String, default: 'kubernetes'
 
     # Reference: http://kubernetes.io/v1.1/docs/admin/kubelet.html
@@ -45,7 +46,8 @@ module KubernetesCookbook
       template '/etc/systemd/system/kubelet.service' do
         source 'systemd/kubelet.service.erb'
         cookbook 'kube'
-        variables kubelet_command: kubelet_command
+        variables kubelet_command: kubelet_command,
+          container_runtime_service: container_runtime_service
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 
