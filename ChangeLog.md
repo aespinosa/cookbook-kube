@@ -1,3 +1,8 @@
+# 0.4.0
+
+* Set systemd unit flags to automatically start on boot
+* Boot the kubelet only after the container runtime is available
+
 # 0.3.0
 
 * Introduce `remote` and `checksum` properties for downloading the binaries
