@@ -84,7 +84,6 @@ module KubernetesCookbook
     property :client_ca_file
     property :cloud_config
     property :cloud_provider
-    property :cluster_name, default: 'kubernetes'
     property :cors_allowed_origins, default: []
     property :etcd_config
     property :etcd_prefix, default: '/registry'
