@@ -1,3 +1,8 @@
+# 1.0.0
+
+* Bump kubernetes binaries to 1.3.6
+* Remove cluster-name to the api-server parameters (#12)
+
 # 0.4.0
 
 * Set systemd unit flags to automatically start on boot
