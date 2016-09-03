@@ -6,11 +6,11 @@ module KubernetesCookbook
     resource_name :kube_controller_manager
 
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' +
-               '/release/v1.2.4/bin/linux/amd64/kube-controller-manager'
+      default: 'https://storage.googleapis.com/kubernetes-release' \
+               '/release/v1.3.6/bin/linux/amd64/kube-controller-manager'
     property :checksum, String,
-      default: '3cf545cd53a1f97525e47783ff608b1a' +
-               '9d753298aad5cea04712351e81144884'
+      default: 'ceca7a843b0a29fcb2b84ed91f114c30'\
+               'c5e3c002589791fcf9ac2af8c2572e11'
     property :run_user, String, default: 'kubernetes'
 
     default_action :create

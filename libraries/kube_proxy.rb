@@ -4,11 +4,11 @@ module KubernetesCookbook
     resource_name :kube_proxy
 
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' +
-               '/release/v1.2.4/bin/linux/amd64/kube-proxy'
+      default: 'https://storage.googleapis.com/kubernetes-release' \
+               '/release/v1.3.6/bin/linux/amd64/kube-proxy'
     property :checksum, String,
-      default: '2f45f95fd48f4bfd7f988ece19ae06c6' +
-               '8f161e9628dd6a495a5a867f14936917'
+      default: 'b85d4045a17960ffab08a89fa577a58c' \
+               '820fe109ca343c4801ed49987d1dc41b'
                
     default_action :create
 

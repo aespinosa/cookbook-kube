@@ -7,10 +7,10 @@ module KubernetesCookbook
 
     property :remote, String,
       default: 'https://storage.googleapis.com/kubernetes-release' +
-               '/release/v1.2.4/bin/linux/amd64/kubelet'
+               '/release/v1.3.6/bin/linux/amd64/kubelet'
     property :checksum, String,
-      default: '4adaf40592248eef6fd4fa126464915e' +
-               'a41e624a70dc77178089760ed235e341'
+      default: '12e43bdf19bc70f4eba68dc97d0ef71f' \
+               '02568011b884f3606b9b9ea9be666a95'
     property :container_runtime_service, String, default: 'docker.service'
     property :run_user, String, default: 'kubernetes'
 
