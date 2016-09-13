@@ -92,12 +92,23 @@ module KubernetesCookbook
     property :cpu_cfs_quota, default: false
     property :docker_endpoint
     property :docker_exec_handler, default: 'native'
+    property :enable_controller_attach_detach, default: true
+    property :enable_custom_metrics, default: false
     property :enable_debugging_handlers, default: true
     property :enable_server, default: true
     property :event_burst, default: 0
     property :event_qps, default: 0
+    property :eviction_hard
+    property :eviction_max_pod_grace_period, default: 0
+    property :eviction_pressure_transition_period, default: '5m0s'
+    property :eviction_soft
+    property :eviction_soft_grace_period
+    property :exit_on_lock_contention, default: false
+    property :experimental_flannel_overlay, default: false
+    property :experimental_nvidia_gpus, default: 0
     property :file_check_frequency, default: '20s'
     property :google_json_key
+    property :hairpin_mode, default: 'promiscuous_bridge'
     property :healthz_bind_address, default: '127.0.0.1'
     property :healthz_port, default: 10_248
     property :host_ipc_sources, default: '*'
@@ -107,7 +118,13 @@ module KubernetesCookbook
     property :http_check_frequency, default: '20s'
     property :image_gc_high_threshold, default: 90
     property :image_gc_low_threshold, default: 80
+    property :kube_api_burst, default: 10
+    property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
+    property :kube_api_qps, default: 5
+    property :kube_reserved
     property :kubeconfig, default: '/var/lib/kubelet/kubeconfig'
+    property :kubelet_cgroups
+    property :lock_file
     property :log_flush_frequency, default: '5s'
     property :low_diskspace_threshold_mb, default: 256
     property :manifest_url
@@ -118,31 +135,47 @@ module KubernetesCookbook
     property :maximum_dead_containers, default: 100
     property :maximum_dead_containers_per_container, default: 2
     property :minimum_container_ttl_duration, default: '1m0s'
+    property :minimum_image_ttl_duration, default: '2m0s'
     property :network_plugin
     property :network_plugin_dir,
              default: '/usr/libexec/kubernetes/kubelet_plugins/net/exec/'
+    property :node_ip
+    property :node_labels
     property :node_status_update_frequency, default: '10s'
+    property :non_masquerade_cidr, default: '10.0.0.0/8'
     property :oom_score_adj, default: -999
+    property :outofdisk_transition_frequency, default: '5m0s'
     property :pod_cidr
+    property :pods_per_core, default: 0
     property :pod_infra_container_image,
              default: 'gcr.io/google_containers/pause'
     property :port, default: 10_250
     property :read_only_port, default: 10_255
     property :really_crash_for_testing, default: false
+    property :reconcile_cidr, default: true
     property :register_node, default: true
+    property :register_schedulable, default: true
     property :registry_burst, default: 10
     property :registry_qps, default: 0
     property :resolv_conf, default: '/etc/resolv.conf'
     property :resource_container, default: '/kubelet'
+    property :rkt_api_endpoint, default: 'localhost:15441'
     property :rkt_path
     property :rkt_stage1_image
     property :root_dir, default: '/var/lib/kubelet'
     property :runonce, default: false
+    property :runtime_cgroups
+    property :runtime_request_timeout, default: '2m0s'
+    property :seccomp_profile_root, default: '/var/lib/kubelet/seccomp'
     property :serialize_image_pulls, default: true
     property :streaming_connection_idle_timeout, default: 0
     property :sync_frequency, default: '10s'
+    property :system_cgroups
     property :system_container
+    property :system_reserved
     property :tls_cert_file
     property :tls_private_key_file
+    property :volume_plugin_dir, default: '/usr/libexec/kubernetes/kubelet-plugins/volume/exec/'
+    property :volume_stats_agg_period, default: '1m0s'
   end
 end

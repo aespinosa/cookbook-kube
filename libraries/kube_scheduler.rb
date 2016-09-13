@@ -61,12 +61,23 @@ module KubernetesCookbook
     property :algorithm_provider, default: 'DefaultProvider'
     property :bind_pods_burst, default: 100
     property :bind_pods_qps, default: 50
+    property :failure_domains, default: 'kubernetes.io/hostname,failure-domain.beta.kubernetes.io/zone,failure-domain.beta.kubernetes.io/region'
     property :google_json_key
+    property :hard_pod_affinity_symmetric_weight, default: 1
+    property :kube_api_burst, default: 100
+    property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
+    property :kube_api_qps, default: 50
     property :kubeconfig
+    property :leader_elect, default: false
+    property :leader_elect_lease_duration, default: '15s'
+    property :leader_elect_renew_deadline, default: '10s'
+    property :leader_elect_retry_period, default: '2s'
     property :log_flush_frequency, default: '5s'
     property :master
     property :policy_config_file
     property :port, default: 10_251
     property :profiling, default: true
+    property :scheduler_name, default: 'default-scheduler'
   end
+
 end
