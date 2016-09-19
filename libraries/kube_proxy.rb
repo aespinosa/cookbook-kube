@@ -53,11 +53,19 @@ module KubernetesCookbook
   class KubeProxy < Chef::Resource
     property :bind_address, default: '0.0.0.0'
     property :cleanup_iptables, default: false
+    property :cluster_cidr
+    property :config_sync_period, default: '15m0s'
+    property :conntrack_max, default: 0
+    property :conntrack_max_per_core, default: 32_768
+    property :conntrack_tcp_timeout_established, default: '24h0m0s'
     property :google_json_key
     property :healthz_bind_address, default: '127.0.0.1'
     property :healthz_port, default: 10_249
     property :hostname_override
     property :iptables_sync_period, default: '30s'
+    property :kube_api_burst, default: 10
+    property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
+    property :kube_api_qps, default: 5
     property :kubeconfig
     property :log_flush_frequency, default: '5s'
     property :masquerade_all, default: false

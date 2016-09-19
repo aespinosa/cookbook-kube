@@ -76,8 +76,15 @@ module KubernetesCookbook
     property :admission_control_config_file
     property :advertise_address
     property :allow_privileged, default: false
+    property :apiserver_count, default: 1
+    property :authentication_token_webhook_cache_ttl, default: '2m0s'
+    property :authentication_token_webhook_config_file
     property :authorization_mode, default: 'AlwaysAllow'
     property :authorization_policy_file
+    property :authorization_rbac_super_user
+    property :authorization_webhook_cache_authorized_ttl, default: '5m0s'
+    property :authorization_webhook_cache_unauthorized_ttl, default: '30s'
+    property :authorization_webhook_config_file
     property :basic_auth_file
     property :bind_address, default: '0.0.0.0'
     property :cert_dir, default: '/var/run/kubernetes'
@@ -85,10 +92,18 @@ module KubernetesCookbook
     property :cloud_config
     property :cloud_provider
     property :cors_allowed_origins, default: []
+    property :delete_collection_workers, default: 1
+    property :deserialization_cache_size, default: 50000
+    property :enable_garbage_collector, default: false
+    property :enable_swagger_ui, default: false
+    property :etcd_cafile
+    property :etcd_certfile
     property :etcd_config
+    property :etcd_keyfile
     property :etcd_prefix, default: '/registry'
     property :etcd_servers, default: []
     property :etcd_servers_overrides, default: []
+    property :etcd_quorum_read, default: false
     property :event_ttl, default: '1h0m0s'
     property :experimental_keystone_url
     property :external_hostname
@@ -101,6 +116,7 @@ module KubernetesCookbook
     property :kubelet_https, default: true
     property :kubelet_port, default: 10_250
     property :kubelet_timeout, default: '5s'
+    property :kubernetes_service_node_port, default: 0
     property :log_flush_frequency, default: '5s'
     property :long_running_request_regexp,
              default: '(/|^)((watch|proxy)(/|$)|'\
@@ -111,9 +127,11 @@ module KubernetesCookbook
     property :min_request_timeout, default: 1800
     property :oidc_ca_file
     property :oidc_client_id
+    property :oidc_groups_claim
     property :oidc_issuer_url
     property :oidc_username_claim, default: 'sub'
     property :profiling, default: true
+    property :repair_malformed_updates, default: true
     property :runtime_config
     property :secure_port, default: 6443
     property :service_account_key_file
@@ -122,11 +140,14 @@ module KubernetesCookbook
     property :service_node_port_range
     property :ssh_keyfile
     property :ssh_user
+    property :storage_backend
+    property :storage_media_type, default: 'application/json'
     property :storage_versions, default: %w(extensions/v1beta1 v1)
     property :tls_cert_file
     property :tls_private_key_file
     property :token_auth_file
     property :watch_cache, default: true
+    property :watch_cache_sizes
 
     property :v, default: 0 # TODO: move to common class
   end
