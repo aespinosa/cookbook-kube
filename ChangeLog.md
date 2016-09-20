@@ -1,3 +1,7 @@
+# 1.1.0
+
+* Update resource properties to reflect kube 1.3.x commandline flags (#13)
+
 # 1.0.0
 
 * Bump kubernetes binaries to 1.3.6
