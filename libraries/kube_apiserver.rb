@@ -5,10 +5,10 @@ module KubernetesCookbook
 
     property :remote, String,
       default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.3.6/bin/linux/amd64/kube-apiserver'
+               '/release/v1.4.0/bin/linux/amd64/kube-apiserver'
     property :checksum, String,
-      default: '63292efe2918c93e9d3362aa12d56c25' \
-               'a651b2224cbf72b29b0580b644208f78'
+      default: '1638e88dec8e33e7099006638507916f' \
+               '889087a98790a3e485db03204291ec9a'
     property :run_user, String, default: 'kubernetes'
 
     default_action :create
@@ -70,13 +70,17 @@ module KubernetesCookbook
   end
 
   # Commandline-related properties
-  # Reference: http://kubernetes.io/v1.1/docs/admin/kube-apiserver.html
+  # Reference: http://kubernetes.io/docs/admin/kube-apiserver/
   class KubeApiserver < Chef::Resource
     property :admission_control, default: 'AlwaysAdmit'
     property :admission_control_config_file
     property :advertise_address
-    property :allow_privileged, default: false
+    property :allow_privileged
     property :apiserver_count, default: 1
+    property :audit_log_maxage
+    property :audit_log_maxbackup
+    property :audit_log_maxsize
+    property :audit_log_path
     property :authentication_token_webhook_cache_ttl, default: '2m0s'
     property :authentication_token_webhook_config_file
     property :authorization_mode, default: 'AlwaysAllow'
@@ -93,20 +97,20 @@ module KubernetesCookbook
     property :cloud_provider
     property :cors_allowed_origins, default: []
     property :delete_collection_workers, default: 1
-    property :deserialization_cache_size, default: 50000
-    property :enable_garbage_collector, default: false
-    property :enable_swagger_ui, default: false
+    property :deserialization_cache_size, default: 50_000
+    property :enable_garbage_collector, default: true
+    property :enable_swagger_ui
     property :etcd_cafile
     property :etcd_certfile
-    property :etcd_config
     property :etcd_keyfile
     property :etcd_prefix, default: '/registry'
     property :etcd_servers, default: []
     property :etcd_servers_overrides, default: []
-    property :etcd_quorum_read, default: false
+    property :etcd_quorum_read
     property :event_ttl, default: '1h0m0s'
     property :experimental_keystone_url
     property :external_hostname
+    property :feature_gates
     property :google_json_key
     property :insecure_bind_address, default: '127.0.0.1'
     property :insecure_port, default: 8080
@@ -116,7 +120,7 @@ module KubernetesCookbook
     property :kubelet_https, default: true
     property :kubelet_port, default: 10_250
     property :kubelet_timeout, default: '5s'
-    property :kubernetes_service_node_port, default: 0
+    property :kubernetes_service_node_port
     property :log_flush_frequency, default: '5s'
     property :long_running_request_regexp,
              default: '(/|^)((watch|proxy)(/|$)|'\
@@ -135,19 +139,20 @@ module KubernetesCookbook
     property :runtime_config
     property :secure_port, default: 6443
     property :service_account_key_file
-    property :service_account_lookup, default: false
+    property :service_account_lookup
     property :service_cluster_ip_range
-    property :service_node_port_range
+    property :service_node_port_range, default: '30000-32767'
     property :ssh_keyfile
     property :ssh_user
     property :storage_backend
     property :storage_media_type, default: 'application/json'
-    property :storage_versions, default: %w(extensions/v1beta1 v1)
+    property :storage_versions
+    property :target_ram_mb
     property :tls_cert_file
     property :tls_private_key_file
     property :token_auth_file
     property :watch_cache, default: true
-    property :watch_cache_sizes
+    property :watch_cache_sizes, default: []
 
     property :v, default: 0 # TODO: move to common class
   end

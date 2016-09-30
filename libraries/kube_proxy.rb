@@ -5,11 +5,11 @@ module KubernetesCookbook
 
     property :remote, String,
       default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.3.6/bin/linux/amd64/kube-proxy'
+               '/release/v1.4.0/bin/linux/amd64/kube-proxy'
     property :checksum, String,
-      default: 'b85d4045a17960ffab08a89fa577a58c' \
-               '820fe109ca343c4801ed49987d1dc41b'
-               
+      default: '3cebe9f93af9fa7a2351012cc209b679' \
+               '3d251b3679fe8e7d344a9eb79f9e6a2e'
+
     default_action :create
 
     action :create do
@@ -49,31 +49,35 @@ module KubernetesCookbook
   end
 
   # Command line properties for the kube-proxy
-  # Reference: http://kubernetes.io/v1.1/docs/admin/kube-proxy.html
+  # Reference: http://kubernetes.io/docs/admin/kube-proxy/
   class KubeProxy < Chef::Resource
     property :bind_address, default: '0.0.0.0'
-    property :cleanup_iptables, default: false
+    property :cleanup_iptables
     property :cluster_cidr
     property :config_sync_period, default: '15m0s'
     property :conntrack_max, default: 0
     property :conntrack_max_per_core, default: 32_768
     property :conntrack_tcp_timeout_established, default: '24h0m0s'
+    property :feature_gates
     property :google_json_key
     property :healthz_bind_address, default: '127.0.0.1'
     property :healthz_port, default: 10_249
     property :hostname_override
+    property :iptables_masquerade_bit, default: 14
     property :iptables_sync_period, default: '30s'
     property :kube_api_burst, default: 10
     property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
     property :kube_api_qps, default: 5
     property :kubeconfig
     property :log_flush_frequency, default: '5s'
-    property :masquerade_all, default: false
+    property :masquerade_all
     property :master
     property :oom_score_adj, default: -999
     property :proxy_mode
     property :proxy_port_range
     property :resource_container, default: '/kube_proxy'
     property :udp_timeout, default: '250ms'
+
+    property :v, default: 0
   end
 end
