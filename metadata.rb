@@ -7,4 +7,4 @@ license 'Apache v2.0'
 source_url 'https://github.com/aespinosa/cookbook-kube'
 issues_url 'https://github.com/aespinosa/cookbook-kube/issues'
 
-version '1.1.0'
+version '2.0.0'

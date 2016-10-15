@@ -1,3 +1,7 @@
+# 2.0.0
+
+* Update resource properties to commandline flags in 1.4.0
+
 # 1.1.0
 
 * Update resource properties to reflect kube 1.3.x commandline flags (#13)
