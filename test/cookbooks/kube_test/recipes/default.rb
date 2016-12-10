@@ -52,7 +52,7 @@ end
 
 flannel_service 'default' do
   configuration 'Network' => '10.10.0.1/16'
-  action %w(create start)
+  action %w(create configure start)
 end.extend FlannelCookbook::SubnetParser
 
 directory '/etc/kubernetes/manifests' do
