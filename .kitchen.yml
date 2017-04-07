@@ -18,5 +18,3 @@ platforms:
 
 suites:
   - name: default
-    run_list:
-      - kube_test
