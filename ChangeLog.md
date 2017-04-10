@@ -1,3 +1,7 @@
+# 3.0.0
+
+* Change kube_apiserver to take hash options
+
 # 2.0.0
 
 * Update resource properties to commandline flags in 1.4.0
