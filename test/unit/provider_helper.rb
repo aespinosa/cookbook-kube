@@ -11,4 +11,16 @@ module ProviderInspection
   def inline_resources
     @inline_run_context.resource_collection
   end
+
+
 end
+
+module ChefContext
+  def chefrun
+    @run ||= Cheffish::ChefRun.new
+    # needed by the user() resources
+    @run.client.run_context.node.automatic[:os] = 'linux'
+    @run
+  end
+end
+

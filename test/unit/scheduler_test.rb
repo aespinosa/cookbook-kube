@@ -23,11 +23,11 @@ end
 
 class ActionTest < Minitest::Test
   require_relative 'provider_helper'
+  include ChefContext
 
   def provider
     @provider ||= begin
-      run = Cheffish::ChefRun.new
-      resource = run.compile_recipe do
+      resource = chefrun.compile_recipe do
         kube_scheduler 'testing'
       end
       provider = resource.provider_for_action(:start)

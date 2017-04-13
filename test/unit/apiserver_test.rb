@@ -58,11 +58,11 @@ end
 
 module Provider
   require_relative 'provider_helper'
+  include ChefContext
 
   def provider(action = :start, &block)
     @provider ||= begin
-      run = Cheffish::ChefRun.new
-      resource = run.compile_recipe do
+      resource = chefrun.compile_recipe do
         kube_apiserver 'testing', &block
       end
       provider = resource.provider_for_action(:create)
