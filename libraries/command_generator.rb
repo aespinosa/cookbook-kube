@@ -17,6 +17,16 @@ module KubernetesCookbook
       end
     end
 
+    def generate_from_hash
+      actual_flags = @resource.class.properties[:options].map do |option, data|
+        data = data.join ',' if value.is_a? Array
+        "--#{option.to_s.tr('_', '-')}=#{data}"
+      end
+      actual_flags.reduce @binary do |command, flag|
+        command << " #{flag}"
+      end
+    end
+
     private
 
     def non_commandline_property?(property)
