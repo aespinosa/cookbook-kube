@@ -67,6 +67,24 @@ Components for a Kubernetes master:
 * `kube_scheduler`
 * `kube_controller_manager`
 
+### Common Properties
+
+All the above resources will contain the following properties:
+
+* `remote` - The URL of where a corresponding component's binary can be
+  downloaded.  The default value points to the official Kubernetes release URL
+  of each component.  Check each resource for the default value of each
+  component.
+* `checksum` - The SHA256 hash of the Kubernetes component's binary.
+* `run_user` - The user in which to run the Kubernetes user.  Defaults to `'kubernetes'`.
+
+### Common Actions
+
+All the above resources will contain the following actions:
+
+* `create` - Download the Kubernetes component's binary to `/usr/bin`.
+* `start` - Starts the Kubernetes component managed through a systemd unit.
+
 ## License
 
 Copyright 2016-2017 Allan Espinosa
