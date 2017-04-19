@@ -9,6 +9,10 @@ managing various components of a Kubernetes cluster.
   open issues about it.
 * Network accessible web server hosting the Kubernetes binaries.
 
+## Cookbook Dependencies
+
+None
+
 # Custom Resources
 
 Components for a kubernetes node:
