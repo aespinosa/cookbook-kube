@@ -1,3 +1,8 @@
+# 2.0.2
+
+* Bump documentation and other metadata information to pass Supermarket quality
+  metrics.
+
 # 2.0.1
 
 * Document how to use the custom resources

@@ -9,4 +9,4 @@ issues_url 'https://github.com/aespinosa/cookbook-kube/issues'
 
 supports 'debian', '>= 8.0'
 
-version '2.0.1'
+version '2.0.2'
