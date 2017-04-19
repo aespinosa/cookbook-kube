@@ -13,6 +13,47 @@ managing various components of a Kubernetes cluster.
 
 None
 
+## Usage
+
+* Add `'kube', '~> 2.0'` to your cookbook's `metadata.rb`.
+* Use the resources shipped in this cookbook in your recipes the same way you
+  use core Chef resources like file, template, directory, package, etc.
+
+```
+# Master
+kube_apiserver 'default' do
+  service_cluster_ip_range '10.0.0.1/24'
+  etcd_servers 'http://127.0.0.1:4001'
+  insecure_bind_address '0.0.0.0' # for convenience
+  action %w(create start)
+end
+
+kube_scheduler 'default' do
+  action %w(create start)
+end
+
+kube_controller_manager 'default' do
+  action %w(create start)
+end
+
+# Node
+
+kubelet_service 'default' do
+  api_servers 'http://127.0.0.1:8080'
+  config '/etc/kubernetes/manifests'
+  cluster_dns '10.0.0.10'
+  cluster_domain 'cluster.local'
+  action %w(create start)
+end
+
+kube_proxy 'default' do
+  action %w(create start)
+end
+```
+
+The test cookbook ran under test-kitchen provide good usage examples.   It is
+found in `test/cookbooks/kube_test`.
+
 ## Custom Resources
 
 Components for a kubernetes node:
