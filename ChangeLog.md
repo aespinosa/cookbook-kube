@@ -1,3 +1,8 @@
+# 2.0.1
+
+* Document how to use the custom resources
+* Update unit tests for Chef 13
+
 # 2.0.0
 
 * Update resource properties to commandline flags in 1.4.0
