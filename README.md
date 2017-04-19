@@ -54,18 +54,18 @@ end
 The test cookbook ran under test-kitchen provide good usage examples.   It is
 found in `test/cookbooks/kube_test`.
 
-## Custom Resources
+## Resources Overview
 
-Components for a kubernetes node:
+Components for a Kubernetes node:
 
-* kubelet
-* kube_proxy
+* `kubelet`
+* `kube_proxy`
 
-Components for a kubernetes master:
+Components for a Kubernetes master:
 
-* kube_apiserver
-* kube_scheduler
-* kube_controller_manager
+* `kube_apiserver`
+* `kube_scheduler`
+* `kube_controller_manager`
 
 ## License
 
