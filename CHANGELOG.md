@@ -1,3 +1,7 @@
+# 2.0.3
+
+* Bump more metadata to pass Supermarket quality metrics.
+
 # 2.0.2
 
 * Bump documentation and other metadata information to pass Supermarket quality
