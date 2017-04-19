@@ -85,6 +85,48 @@ All the above resources will contain the following actions:
 * `create` - Download the Kubernetes component's binary to `/usr/bin`.
 * `start` - Starts the Kubernetes component managed through a systemd unit.
 
+## Resource Properties
+
+Each resource' set of unique properties corresponds to the options in the
+Kubernetes component they represent:
+
+* `kube_apiserver` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kube-apiserver.md>
+* `kube_controller_manager` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kube-controller-manager.md>
+* `kube_scheduler` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kube-scheduler.md>
+* `kubelet` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kubelet.md>
+* `kube_proxy` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kube-proxy.md>
+
+In general, a command line flag of the form `--long-option` will correspond to
+a custom resource property called `long_option`.
+
+### Extending Properties
+
+When newer versions of Kubernetes are released, components might introduce and
+deprecate some commandline flags that are not yet hard-coded as properties.
+
+To add these properties, a wrapper cookbook can be written like the following:
+
+```
+# wrapper-cookbook/metadata.rb
+name 'wrapper-cookbook'
+depends 'kube', '~> 2.0' # Make sure you have this
+
+# wrapper-cookbook/libraries/apiserver.rb
+class KubernetesCookbook::KubeApiserver
+  property :something_only_in_kubernetes9000
+end
+```
+
+The `kube_apiserver` resource can now use the new commandline flag available
+in Kubernetes v9000 like the following:
+
+```
+# wrapper-cookbook/recipes/default.rb
+kube_apiserver 'default' do
+  something_only_in_kubernetes9000 'someflag'
+end
+```
+
 ## License
 
 Copyright 2016-2017 Allan Espinosa
