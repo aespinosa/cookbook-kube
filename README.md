@@ -18,7 +18,7 @@ Components for a kubernetes master:
 
 # License
 
-Copyright 2016 Allan Espinosa
+Copyright 2016-2017 Allan Espinosa
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
