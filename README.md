@@ -1,7 +1,7 @@
 # kube cookbook
 
-Library cookbook for managing various components of a Kubernetes cluster as Chef
-resources.
+The kube cookbook is a Library cookbook that provides custom resources for
+managing various components of a Kubernetes cluster.
 
 # Custom Resources
 
