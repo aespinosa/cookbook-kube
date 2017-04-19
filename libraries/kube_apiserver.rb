@@ -71,7 +71,7 @@ module KubernetesCookbook
 
   # Commandline-related properties
   # Reference: http://kubernetes.io/docs/admin/kube-apiserver/
-  class KubeApiserver < Chef::Resource
+  class KubeApiserver
     property :admission_control, default: 'AlwaysAdmit'
     property :admission_control_config_file
     property :advertise_address

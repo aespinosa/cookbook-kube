@@ -73,7 +73,7 @@ module KubernetesCookbook
 
   # Commandline properties of a Kubelet
   # Reference: http://kubernetes.io/docs/admin/kubelet/
-  class KubeletService < Chef::Resource
+  class KubeletService
     property :address, default: '0.0.0.0'
     property :allow_privileged, default: false
     property :api_servers

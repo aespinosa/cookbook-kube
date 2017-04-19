@@ -58,7 +58,7 @@ module KubernetesCookbook
 
   # Commandline properties for the Controller Manager
   # Reference: http://kubernetes.io/docs/admin/kube-controller-manager/
-  class KubeControllerManager < Chef::Resource
+  class KubeControllerManager
     property :address, default: '0.0.0.0'
     property :allocate_node_cidrs
     property :cloud_config

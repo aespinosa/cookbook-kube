@@ -50,7 +50,7 @@ module KubernetesCookbook
 
   # Command line properties for the kube-proxy
   # Reference: http://kubernetes.io/docs/admin/kube-proxy/
-  class KubeProxy < Chef::Resource
+  class KubeProxy
     property :bind_address, default: '0.0.0.0'
     property :cleanup_iptables
     property :cluster_cidr

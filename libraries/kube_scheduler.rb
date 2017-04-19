@@ -56,7 +56,7 @@ module KubernetesCookbook
 
   # scheduler commandline flags
   # Reference: http://kubernetes.io/docs/admin/kube-scheduler/
-  class KubeScheduler < Chef::Resource
+  class KubeScheduler
     property :address, default: '0.0.0.0'
     property :algorithm_provider, default: 'DefaultProvider'
     property :bind_pods_burst, default: 100
