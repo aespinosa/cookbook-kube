@@ -65,7 +65,7 @@ module Provider
       resource = chefrun.compile_recipe do
         kube_apiserver 'testing', &block
       end
-      provider = resource.provider_for_action(:create)
+      provider = resource.provider_for_action(action)
       provider.extend ProviderInspection
     end
   end
@@ -86,7 +86,7 @@ class ActionCreateTest < Minitest::Test
     assert_equal 'https:///kube-apiserver', binary.source
   end
 
-  def test_passes_the_source_remote
+  def test_passes_the_checksum
     provider :create do
       checksum 'the-checksum'
     end

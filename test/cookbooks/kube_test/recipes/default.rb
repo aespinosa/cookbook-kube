@@ -12,7 +12,7 @@ end
 
 etcd_service 'default' do
   source 'http://github.com/coreos/etcd/releases/download'\
-         '/v2.2.3/etcd-v2.2.3-linux-amd64.tar.gz '
+         '/v2.2.3/etcd-v2.2.3-linux-amd64.tar.gz'
   version '2.2.3'
   service_manager 'systemd'
   action %w(create start)
@@ -50,25 +50,23 @@ apt_repository 'docker' do
   cache_rebuild true
 end
 
-flannel_service 'default' do
-  configuration 'Network' => '10.10.0.1/16'
-  action %w(create configure start)
-end.extend FlannelCookbook::SubnetParser
-
 directory '/etc/kubernetes/manifests' do
   recursive true
 end
 
 docker_service 'default' do
-  bip lazy { resources('flannel_service[default]').subnetfile_subnet }
-  mtu lazy { resources('flannel_service[default]').subnetfile_mtu }
+  iptables false
+  ip_masq false
+  storage_driver 'devicemapper'
   install_method 'package'
   version '1.9.1'
 end # needed by kubelet_service[default]
 
 kubelet_service 'default' do
   api_servers 'http://127.0.0.1:8080'
-  config '/etc/kubernetes/manifests'
+  pod_manifest_path '/etc/kubernetes/manifests'
+  network_plugin 'kubenet'
+  pod_cidr '10.180.1.0/24'
   cluster_dns '10.0.0.10'
   cluster_domain 'cluster.local'
   action %w(create start)

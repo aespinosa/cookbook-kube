@@ -4,7 +4,7 @@ module KubernetesCookbook
     resource_name :kube_scheduler
 
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' +
+      default: 'https://storage.googleapis.com/kubernetes-release' \
                '/release/v1.4.0/bin/linux/amd64/kube-scheduler'
     property :checksum, String,
       default: '81c58a78e25ddfa3273ed2cef89c567f'\
@@ -82,5 +82,4 @@ module KubernetesCookbook
 
     property :v, default: 0
   end
-
 end

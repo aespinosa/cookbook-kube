@@ -11,8 +11,6 @@ module ProviderInspection
   def inline_resources
     @inline_run_context.resource_collection
   end
-
-
 end
 
 module ChefContext
@@ -23,4 +21,3 @@ module ChefContext
     @run
   end
 end
-

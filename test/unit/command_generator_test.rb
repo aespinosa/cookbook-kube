@@ -63,8 +63,7 @@ class CommandGeneratorTest < Minitest::Test
                  command_generator.generate
   end
 
-  # rubocop:disable Metrics/LineLength, Style/AsciiComments
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   # しかたない
   # Demo of
   # https://github.com/kubernetes/kubernetes/blob/master/cluster/images/hyperkube/master-multi.json#L30-L44

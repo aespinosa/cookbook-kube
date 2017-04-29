@@ -6,7 +6,7 @@ module KubernetesCookbook
     resource_name :kubelet_service
 
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' +
+      default: 'https://storage.googleapis.com/kubernetes-release' \
                '/release/v1.4.0/bin/linux/amd64/kubelet'
     property :checksum, String,
       default: '531dad0b316d214923d3e928f6ebc3c6' \
@@ -47,7 +47,7 @@ module KubernetesCookbook
         source 'systemd/kubelet.service.erb'
         cookbook 'kube'
         variables kubelet_command: kubelet_command,
-          container_runtime_service: container_runtime_service
+                  container_runtime_service: container_runtime_service
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 
