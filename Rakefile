@@ -25,6 +25,7 @@ Rake::TestTask.new(:test) do |t|
   t.libs = %w(libraries)
   t.ruby_opts << '-rsimplecov' if ENV['COVERAGE']
   t.test_files = FileList['test/unit/*_test.rb']
+  t.warning = false
   t.verbose = true
 end
 
