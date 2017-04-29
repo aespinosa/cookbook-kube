@@ -2,7 +2,7 @@ name 'kube'
 maintainer 'Allan Espinosa'
 maintainer_email 'allan.espinosa@outlook.com'
 description 'Custom resources to build a Kubernetes Cluster'
-license 'apachev2'
+license 'Apache-2.0'
 
 source_url 'https://github.com/aespinosa/cookbook-kube'
 issues_url 'https://github.com/aespinosa/cookbook-kube/issues'
