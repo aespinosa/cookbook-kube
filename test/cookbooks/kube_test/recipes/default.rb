@@ -39,7 +39,7 @@ end
 
 # Node
 
-include_recipe 'apt'
+apt_update
 
 apt_repository 'docker' do
   uri 'https://apt.dockerproject.org/repo'
