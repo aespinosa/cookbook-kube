@@ -10,5 +10,6 @@ source_url 'https://github.com/aespinosa/cookbook-kube'
 issues_url 'https://github.com/aespinosa/cookbook-kube/issues'
 
 supports 'debian', '>= 8.0'
+supports 'ubuntu'
 
 version '2.0.3'
