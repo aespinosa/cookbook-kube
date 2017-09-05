@@ -17,7 +17,7 @@ module KubernetesCookbook
     property :run_user, String, default: 'kubernetes'
 
     # Reference: http://kubernetes.io/docs/admin/kubelet/
-    property :api_servers, default: nil
+    property :api_servers
 
     default_action :create
 
