@@ -6,10 +6,8 @@
 *.un~
 pkg/
 
-# Berkshelf
-.vagrant
-/cookbooks
-Berksfile.lock
+# policyfile
+Policyfile.lock.json
 
 # Bundler
 Gemfile.lock
