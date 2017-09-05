@@ -11,10 +11,6 @@ end
 # Master
 
 etcd_service 'default' do
-  source 'http://github.com/coreos/etcd/releases/download'\
-         '/v2.2.3/etcd-v2.2.3-linux-amd64.tar.gz'
-  version '2.2.3'
-  service_manager 'systemd'
   action %w(create start)
 end # Needed by the kube_apiserver[default]
 
