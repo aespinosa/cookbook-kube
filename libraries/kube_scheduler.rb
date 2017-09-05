@@ -5,10 +5,9 @@ module KubernetesCookbook
 
     property :remote, String,
       default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.4.0/bin/linux/amd64/kube-scheduler'
+               '/release/v1.7.5/bin/linux/amd64/kube-scheduler'
     property :checksum, String,
-      default: '81c58a78e25ddfa3273ed2cef89c567f'\
-               '759efd5c5f1489cef267b0ded856c4c7'
+      default: '0c8b2b1710dad44284d3c8d39a518e5a0dcd549ad4f22edb8adfd5a0c93481ef'
     property :run_user, String, default: 'kubernetes'
 
     default_action :create
