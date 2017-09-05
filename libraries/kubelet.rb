@@ -7,8 +7,10 @@ module KubernetesCookbook
 
     property :version, String, default: '1.7.5'
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.7.5/bin/linux/amd64/kubelet'
+      default: lazy { |r|
+        'https://storage.googleapis.com/kubernetes-release' \
+        "/release/v#{r.version}/bin/linux/amd64/kubelet"
+      }
     property :checksum, String,
       default: '2ca46b4a9e6f1771d6d2ad529f525bc3154e4e13f31e265e1923a832eed11ab5'
     property :container_runtime_service, String, default: 'docker.service'

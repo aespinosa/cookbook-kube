@@ -5,8 +5,10 @@ module KubernetesCookbook
 
     property :version, String, default: '1.7.5'
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.7.5/bin/linux/amd64/kube-apiserver'
+      default: lazy { |r|
+        'https://storage.googleapis.com/kubernetes-release' \
+        "/release/v#{r.version}/bin/linux/amd64/kube-apiserver"
+      }
     property :checksum, String,
       default: 'ba4b74b3b0832818c27accb8004cccba0ded1ffbb5028d85703dbb8345b5dc21'
     property :run_user, String, default: 'kubernetes'
