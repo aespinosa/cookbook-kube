@@ -5,6 +5,7 @@ module KubernetesCookbook
   class KubeControllerManager < Chef::Resource
     resource_name :kube_controller_manager
 
+    property :version, String, default: '1.7.5'
     property :remote, String,
       default: 'https://storage.googleapis.com/kubernetes-release' \
                '/release/v1.7.5/bin/linux/amd64/kube-controller-manager'
