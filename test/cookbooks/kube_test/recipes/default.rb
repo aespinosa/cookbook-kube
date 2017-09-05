@@ -35,16 +35,11 @@ end
 
 # Node
 
+package 'apt-transport-https'
+
 apt_update
 
-apt_repository 'docker' do
-  uri 'https://apt.dockerproject.org/repo'
-  distribution 'debian-jessie'
-  components %w(main)
-  keyserver 'p80.pool.sks-keyservers.net'
-  key '58118E89F3A912897C070ADBF76221572C52609D'
-  cache_rebuild true
-end
+include_recipe 'chef-apt-docker::default'
 
 directory '/etc/kubernetes/manifests' do
   recursive true
