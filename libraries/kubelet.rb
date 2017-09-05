@@ -31,11 +31,11 @@ module KubernetesCookbook
     action :start do
       user 'kubernetes' do
         action :create
-        only_if { run_user == 'kubernetes' }
+        only_if { new_resource.run_user == 'kubernetes' }
       end
 
       directory '/var/run/kubernetes' do
-        owner run_user
+        owner new_resource.run_user
       end
 
       template '/etc/tmpfiles.d/kubernetes.conf' do
@@ -47,7 +47,7 @@ module KubernetesCookbook
         source 'systemd/kubelet.service.erb'
         cookbook 'kube'
         variables kubelet_command: kubelet_command,
-                  container_runtime_service: container_runtime_service
+                  container_runtime_service: new_resource.container_runtime_service
         notifies :run, 'execute[systemctl daemon-reload]', :immediately
       end
 

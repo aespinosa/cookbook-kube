@@ -27,7 +27,7 @@ module KubernetesCookbook
     action :start do
       user 'kubernetes' do
         action :create
-        only_if { run_user == 'kubernetes' }
+        only_if { new_resource.run_user == 'kubernetes' }
       end
 
       template '/etc/systemd/system/kube-controller-manager.service' do

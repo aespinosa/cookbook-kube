@@ -25,11 +25,11 @@ module KubernetesCookbook
     action :start do
       user 'kubernetes' do
         action :create
-        only_if { run_user == 'kubernetes' }
+        only_if { new_resource.run_user == 'kubernetes' }
       end
 
       directory '/var/run/kubernetes' do
-        owner run_user
+        owner new_resource.run_user
       end
 
       template '/etc/tmpfiles.d/kubernetes.conf' do
