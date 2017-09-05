@@ -16,7 +16,7 @@ end # Needed by the kube_apiserver[default]
 
 kube_apiserver 'default' do
   service_cluster_ip_range '10.0.0.1/24'
-  etcd_servers 'http://127.0.0.1:4001'
+  etcd_servers 'http://127.0.0.1:2379'
   insecure_bind_address '0.0.0.0' # for convenience
   action %w(create start)
 end
