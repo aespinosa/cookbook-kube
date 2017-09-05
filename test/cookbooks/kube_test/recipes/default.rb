@@ -50,7 +50,7 @@ docker_service 'default' do
   ip_masq false
   storage_driver 'devicemapper'
   install_method 'package'
-  version '1.9.1'
+  version '17.06.1'
 end # needed by kubelet_service[default]
 
 kubelet_service 'default' do
