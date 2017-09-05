@@ -10,7 +10,6 @@ verifier:
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: true
 
 platforms:
   - name: debian-8.7
