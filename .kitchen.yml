@@ -7,7 +7,6 @@
 
 verifier:
   name: inspec
-  format: doc
 
 provisioner:
   name: chef_zero
