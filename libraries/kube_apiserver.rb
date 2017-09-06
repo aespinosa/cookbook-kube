@@ -42,7 +42,7 @@ module KubernetesCookbook
 
       systemd_contents = {
         Unit: {
-          Description: 'kube-apiserver',
+          Description: 'Kubernetes API Server',
           Documentation: 'https://k8s.io',
           After: 'network.target',
         },

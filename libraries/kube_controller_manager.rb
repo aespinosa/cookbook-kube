@@ -35,7 +35,7 @@ module KubernetesCookbook
 
       systemd_contents = {
         Unit: {
-          Description: 'kube-controller-manager',
+          Description: 'Kubernetes Controller Manager',
           Documentation: 'https://k8s.io',
           After: 'network.target',
         },

@@ -33,7 +33,7 @@ module KubernetesCookbook
 
       systemd_contents = {
         Unit: {
-          Description: 'kube-scheduler',
+          Description: 'Kubernetes Scheduler Plugin',
           Documentation: 'https://k8s.io',
           After: 'network.target',
         },

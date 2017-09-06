@@ -27,7 +27,7 @@ module KubernetesCookbook
     action :start do
       systemd_contents = {
         Unit: {
-          Description: 'kube-proxy',
+          Description: 'Kubernetes Kube-Proxy Server',
           Documentation: 'https://k8s.io',
           After: 'network.target',
         },

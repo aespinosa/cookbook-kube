@@ -48,7 +48,7 @@ module KubernetesCookbook
 
       systemd_contents = {
         Unit: {
-          Description: 'kubelet',
+          Description: 'Kubernetes Kubelet Server',
           Documentation: 'https://k8s.io',
           After: "network.target #{new_resource.container_runtime_service}",
           Wants: new_resource.container_runtime_service,
