@@ -68,8 +68,10 @@ Components for a Kubernetes master:
 All the above resources will contain the following properties:
 
 - `remote` - The URL of where a corresponding component's binary can be downloaded. The default value points to the official Kubernetes release URL of each component. Check each resource for the default value of each component.
+- `version` - The version of the Kubernetes artifact to pull down. Defaults to `'1.7.5'`. NOTE: This will be ignored if you set the `remote` property instead.
 - `checksum` - The SHA256 hash of the Kubernetes component's binary.
 - `run_user` - The user in which to run the Kubernetes user. Defaults to `'kubernetes'`.
+- `file_ulimit` - The file ulimit value to set for the services - Integer. Defaults to `65536`
 
 ### Common Actions
 
