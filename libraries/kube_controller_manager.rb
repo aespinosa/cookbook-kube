@@ -14,6 +14,7 @@ module KubernetesCookbook
     property :checksum, String,
       default: '448f3d34b92f2070632e2a503e5cfa6b36109bc23ac62157f6c1efa107f783c9'
     property :run_user, String, default: 'kubernetes'
+    property :file_ulimit, Integer, default: 65536
 
     default_action :create
 
@@ -43,6 +44,7 @@ module KubernetesCookbook
           User: new_resource.run_user,
           ExecStart: generator.generate,
           Restart: 'on-failure',
+          LimitNOFILE: new_resource.file_ulimit,
         },
         Install: {
           WantedBy: 'multi-user.target',

@@ -15,6 +15,7 @@ module KubernetesCookbook
       default: '2ca46b4a9e6f1771d6d2ad529f525bc3154e4e13f31e265e1923a832eed11ab5'
     property :container_runtime_service, String, default: 'docker.service'
     property :run_user, String, default: 'kubernetes'
+    property :file_ulimit, Integer, default: 65536
 
     # Reference: http://kubernetes.io/docs/admin/kubelet/
     property :api_servers
@@ -56,6 +57,7 @@ module KubernetesCookbook
           # User: new_resource.run_user,
           ExecStart: kubelet_command,
           Restart: 'on-failure',
+          LimitNOFILE: new_resource.file_ulimit,
         },
         Install: {
           WantedBy: 'multi-user.target',

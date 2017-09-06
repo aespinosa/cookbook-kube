@@ -11,6 +11,7 @@ module KubernetesCookbook
       }
     property :checksum, String,
       default: 'd51441ece8b98a851190736e0a0bf1eb388a55c3e5653267cec76f90b33c6a59'
+    property :file_ulimit, Integer, default: 65536
 
     default_action :create
 
@@ -33,6 +34,7 @@ module KubernetesCookbook
         Service: {
           ExecStart: generator.generate,
           Restart: 'on-failure',
+          LimitNOFILE: new_resource.file_ulimit,
         },
         Install: {
           WantedBy: 'multi-user.target',
