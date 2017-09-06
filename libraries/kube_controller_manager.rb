@@ -42,6 +42,7 @@ module KubernetesCookbook
           Type: 'simple',
           User: new_resource.run_user,
           ExecStart: generator.generate,
+          Restart: 'on-failure',
         },
         Install: {
           WantedBy: 'multi-user.target',

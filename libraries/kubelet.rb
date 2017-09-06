@@ -55,6 +55,7 @@ module KubernetesCookbook
         Service: {
           # User: new_resource.run_user,
           ExecStart: kubelet_command,
+          Restart: 'on-failure',
         },
         Install: {
           WantedBy: 'multi-user.target',

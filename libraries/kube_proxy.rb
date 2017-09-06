@@ -32,6 +32,7 @@ module KubernetesCookbook
         },
         Service: {
           ExecStart: generator.generate,
+          Restart: 'on-failure',
         },
         Install: {
           WantedBy: 'multi-user.target',
