@@ -4,7 +4,7 @@ The kube cookbook is a Library cookbook that provides custom resources for manag
 
 ## Requirements
 
-- Chef 12.7 or higher. Chef 11 and 12.0-12.6 is NOT SUPPORTED. Please do not open issues about it.
+- Chef 12.11 or higher
 - Network accessible web server hosting the Kubernetes binaries.
 
 ## Cookbook Dependencies

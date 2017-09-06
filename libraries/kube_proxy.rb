@@ -24,16 +24,24 @@ module KubernetesCookbook
     end
 
     action :start do
-      template '/etc/systemd/system/kube-proxy.service' do
-        source 'systemd/kube-proxy.service.erb'
-        cookbook 'kube'
-        variables kube_proxy_command: generator.generate
-        notifies :run, 'execute[systemctl daemon-reload]', :immediately
-      end
+      systemd_contents = {
+        Unit: {
+          Description: 'kube-proxy',
+          Documentation: 'https://k8s.io',
+          After: 'network.target',
+        },
+        Service: {
+          ExecStart: generator.generate,
+        },
+        Install: {
+          WantedBy: 'multi-user.target',
+        },
+      }
 
-      execute 'systemctl daemon-reload' do
-        command 'systemctl daemon-reload'
-        action :nothing
+      systemd_unit 'kube-proxy.service' do
+        content(systemd_contents)
+        action :create
+        notifies :restart, 'service[kube-proxy]', :immediately
       end
 
       service 'kube-proxy' do

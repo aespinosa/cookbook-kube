@@ -32,16 +32,26 @@ module KubernetesCookbook
         only_if { new_resource.run_user == 'kubernetes' }
       end
 
-      template '/etc/systemd/system/kube-controller-manager.service' do
-        source 'systemd/kube-controller-manager.service.erb'
-        cookbook 'kube'
-        variables kube_controller_manager_command: generator.generate
-        notifies :run, 'execute[systemctl daemon-reload]', :immediately
-      end
+      systemd_contents = {
+        Unit: {
+          Description: 'kube-controller-manager',
+          Documentation: 'https://k8s.io',
+          After: 'network.target',
+        },
+        Service: {
+          Type: 'simple',
+          User: new_resource.run_user,
+          ExecStart: generator.generate,
+        },
+        Install: {
+          WantedBy: 'multi-user.target',
+        },
+      }
 
-      execute 'systemctl daemon-reload' do
-        command 'systemctl daemon-reload'
-        action :nothing
+      systemd_unit 'kube-controller-manager.service' do
+        content(systemd_contents)
+        action :create
+        notifies :restart, 'service[kube-controller-manager]', :immediately
       end
 
       service 'kube-controller-manager' do

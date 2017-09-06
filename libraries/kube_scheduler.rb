@@ -30,16 +30,25 @@ module KubernetesCookbook
         only_if { new_resource.run_user == 'kubernetes' }
       end
 
-      template '/etc/systemd/system/kube-scheduler.service' do
-        source 'systemd/kube-scheduler.service.erb'
-        cookbook 'kube'
-        variables kube_scheduler_command: generator.generate
-        notifies :run, 'execute[systemctl daemon-reload]', :immediately
-      end
+      systemd_contents = {
+        Unit: {
+          Description: 'kube-scheduler',
+          Documentation: 'https://k8s.io',
+          After: 'network.target',
+        },
+        Service: {
+          User: new_resource.run_user,
+          ExecStart: generator.generate,
+        },
+        Install: {
+          WantedBy: 'multi-user.target',
+        },
+      }
 
-      execute 'systemctl daemon-reload' do
-        command 'systemctl daemon-reload'
-        action :nothing
+      systemd_unit 'kube-scheduler.service' do
+        content(systemd_contents)
+        action :create
+        notifies :restart, 'service[kube-scheduler]', :immediately
       end
 
       service 'kube-scheduler' do

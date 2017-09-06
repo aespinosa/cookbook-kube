@@ -39,16 +39,26 @@ module KubernetesCookbook
         cookbook 'kube'
       end
 
-      template '/etc/systemd/system/kube-apiserver.service' do
-        source 'systemd/kube-apiserver.service.erb'
-        cookbook 'kube'
-        variables kube_apiserver_command: generator.generate
-        notifies :run, 'execute[systemctl daemon-reload]', :immediately
-      end
+      systemd_contents = {
+        Unit: {
+          Description: 'kube-apiserver',
+          Documentation: 'https://k8s.io',
+          After: 'network.target',
+        },
+        Service: {
+          Type: 'notify',
+          User: new_resource.run_user,
+          ExecStart: generator.generate,
+        },
+        Install: {
+          WantedBy: 'multi-user.target',
+        },
+      }
 
-      execute 'systemctl daemon-reload' do
-        command 'systemctl daemon-reload'
-        action :nothing
+      systemd_unit 'kube-apiserver.service' do
+        content(systemd_contents)
+        action :create
+        notifies :restart, 'service[kube-apiserver]', :immediately
       end
 
       service 'kube-apiserver' do

@@ -45,17 +45,26 @@ module KubernetesCookbook
         cookbook 'kube'
       end
 
-      template '/etc/systemd/system/kubelet.service' do
-        source 'systemd/kubelet.service.erb'
-        cookbook 'kube'
-        variables kubelet_command: kubelet_command,
-                  container_runtime_service: new_resource.container_runtime_service
-        notifies :run, 'execute[systemctl daemon-reload]', :immediately
-      end
+      systemd_contents = {
+        Unit: {
+          Description: 'kubelet',
+          Documentation: 'https://k8s.io',
+          After: "network.target #{new_resource.container_runtime_service}",
+          Wants: new_resource.container_runtime_service,
+        },
+        Service: {
+          # User: new_resource.run_user,
+          ExecStart: kubelet_command,
+        },
+        Install: {
+          WantedBy: 'multi-user.target',
+        },
+      }
 
-      execute 'systemctl daemon-reload' do
-        command 'systemctl daemon-reload'
-        action :nothing
+      systemd_unit 'kubelet.service' do
+        content(systemd_contents)
+        action :create
+        notifies :restart, 'service[kubelet]', :immediately
       end
 
       service 'kubelet' do
