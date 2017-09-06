@@ -16,7 +16,7 @@ None
 - Add `'kube', '~> 2.0'` to your cookbook's `metadata.rb`.
 - Use the resources shipped in this cookbook in your recipes the same way you use core Chef resources like file, template, directory, package, etc.
 
-```
+```ruby
 # Master
 kube_apiserver 'default' do
   service_cluster_ip_range '10.0.0.1/24'
@@ -98,7 +98,7 @@ When newer versions of Kubernetes are released, components might introduce and d
 
 To add these properties, a wrapper cookbook can be written like the following:
 
-```
+```ruby
 # wrapper-cookbook/metadata.rb
 name 'wrapper-cookbook'
 depends 'kube', '~> 2.0' # Make sure you have this
@@ -111,7 +111,7 @@ end
 
 The `kube_apiserver` resource can now use the new commandline flag available in Kubernetes v9000 like the following:
 
-```
+```ruby
 # wrapper-cookbook/recipes/default.rb
 kube_apiserver 'default' do
   something_only_in_kubernetes9000 'someflag'
