@@ -40,7 +40,6 @@ module KubernetesCookbook
           After: 'network.target',
         },
         Service: {
-          Type: 'simple',
           User: new_resource.run_user,
           ExecStart: generator.generate,
           Restart: 'on-failure',
