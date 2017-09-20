@@ -69,16 +69,14 @@ module KubernetesCookbook
   end
 
   # scheduler commandline flags
-  # Reference: http://kubernetes.io/docs/admin/kube-scheduler/
+  # Reference: https://kubernetes.io/docs/admin/kube-scheduler/
   class KubeScheduler
     property :address, default: '0.0.0.0'
     property :algorithm_provider, default: 'DefaultProvider'
-    property :bind_pods_burst, default: 100
-    property :bind_pods_qps, default: 50
-    property :failure_domains, default: 'kubernetes.io/hostname,failure-domain.beta.kubernetes.io/zone,failure-domain.beta.kubernetes.io/region'
+    property :azure_container_registry_config
+    property :contention_profiling
     property :feature_gates
     property :google_json_key
-    property :hard_pod_affinity_symmetric_weight, default: 1
     property :kube_api_burst, default: 100
     property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
     property :kube_api_qps, default: 50
@@ -86,13 +84,18 @@ module KubernetesCookbook
     property :leader_elect, default: true
     property :leader_elect_lease_duration, default: '15s'
     property :leader_elect_renew_deadline, default: '10s'
+    property :leader_elect_resource_lock
     property :leader_elect_retry_period, default: '2s'
-    property :log_flush_frequency, default: '5s'
+    property :lock_object_name, default: 'kube-scheduler'
+    property :lock_object_namespace, default: 'kube-system'
     property :master
     property :policy_config_file
+    property :policy_configmap
+    property :policy_configmap_namespace, default: 'kube-system'
     property :port, default: 10_251
     property :profiling, default: true
     property :scheduler_name, default: 'default-scheduler'
+    property :use_legacy_policy_config
 
     property :v, default: 0
   end

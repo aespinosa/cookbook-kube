@@ -62,33 +62,37 @@ module KubernetesCookbook
   end
 
   # Command line properties for the kube-proxy
-  # Reference: http://kubernetes.io/docs/admin/kube-proxy/
+  # Reference: https://kubernetes.io/docs/admin/kube-proxy/
   class KubeProxy
+    property :azure_container_registry_config
     property :bind_address, default: '0.0.0.0'
     property :cleanup_iptables
     property :cluster_cidr
+    property :config
     property :config_sync_period, default: '15m0s'
-    property :conntrack_max, default: 0
     property :conntrack_max_per_core, default: 32_768
+    property :conntrack_min, default: 131_072
+    property :conntrack_tcp_timeout_close_wait, default: '1h0m0s'
     property :conntrack_tcp_timeout_established, default: '24h0m0s'
     property :feature_gates
     property :google_json_key
-    property :healthz_bind_address, default: '127.0.0.1'
+    property :healthz_bind_address, default: '0.0.0.0:10256'
     property :healthz_port, default: 10_249
     property :hostname_override
     property :iptables_masquerade_bit, default: 14
+    property :iptables_min_sync_period
     property :iptables_sync_period, default: '30s'
     property :kube_api_burst, default: 10
     property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
     property :kube_api_qps, default: 5
     property :kubeconfig
-    property :log_flush_frequency, default: '5s'
     property :masquerade_all
     property :master
     property :oom_score_adj, default: -999
     property :proxy_mode
+    property :profiling
+    property :proxy_mode
     property :proxy_port_range
-    property :resource_container, default: '/kube_proxy'
     property :udp_timeout, default: '250ms'
 
     property :v, default: 0
