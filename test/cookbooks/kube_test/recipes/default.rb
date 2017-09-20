@@ -4,8 +4,8 @@ remote_file 'kubectl binary' do
   path '/usr/bin/kubectl'
   mode '0755'
   source 'https://storage.googleapis.com/kubernetes-release/release'\
-         '/v1.2.4/bin/linux/amd64/kubectl'
-  checksum 'dac61fbd506f7a17540feca691cd8a9d9d628d59661eebce788a50511f578897'
+         '/v1.7.6/bin/linux/amd64/kubectl'
+  checksum '32d85c8f38aded3466a36f0d94906c5174eb4076a5f23b7187b8f77ecdd75834'
 end
 
 # Master
