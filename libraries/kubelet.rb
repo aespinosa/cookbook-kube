@@ -30,7 +30,7 @@ module KubernetesCookbook
         checksum new_resource.checksum
       end
 
-      package %w(util-linux ethtool socat)
+      package %w(iptables iproute2 socat util-linux mount ebtables)
     end
 
     action :start do
