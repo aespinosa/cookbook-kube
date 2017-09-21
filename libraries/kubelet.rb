@@ -29,6 +29,8 @@ module KubernetesCookbook
         source new_resource.remote
         checksum new_resource.checksum
       end
+
+      package %w(util-linux ethtool socat)
     end
 
     action :start do
@@ -49,7 +51,7 @@ module KubernetesCookbook
       systemd_contents = {
         Unit: {
           Description: 'Kubernetes Kubelet Server',
-          Documentation: 'https://k8s.io',
+          Documentation: 'http://kubernetes.io/docs/',
           After: "network.target #{new_resource.container_runtime_service}",
           Wants: new_resource.container_runtime_service,
         },
@@ -57,6 +59,7 @@ module KubernetesCookbook
           # User: new_resource.run_user,
           ExecStart: kubelet_command,
           Restart: 'on-failure',
+          RestartSec: 10,
           LimitNOFILE: new_resource.file_ulimit,
         },
         Install: {
