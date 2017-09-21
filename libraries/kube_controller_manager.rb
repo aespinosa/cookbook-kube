@@ -19,7 +19,7 @@ module KubernetesCookbook
     default_action :create
 
     action :create do
-      remote_file 'kube-controller-manager binary' do
+      remote_file "kube-controller-manager version: #{new_resource.version}" do
         path controller_manager_path
         mode '0755'
         source new_resource.remote

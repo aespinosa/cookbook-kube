@@ -17,7 +17,7 @@ module KubernetesCookbook
     default_action :create
 
     action :create do
-      remote_file 'kube-scheduler binary' do
+      remote_file "kube-scheduler binary version: #{new_resource.version}" do
         path scheduler_path
         mode '0755'
         source new_resource.remote

@@ -15,7 +15,7 @@ module KubernetesCookbook
     property :file_ulimit, Integer, default: 65536
 
     action :create do
-      remote_file 'kube-apiserver binary' do
+      remote_file "kube-apiserver binary version: #{new_resource.version}" do
         path apiserver_path
         mode '0755'
         source new_resource.remote
