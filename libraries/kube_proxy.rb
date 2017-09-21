@@ -3,14 +3,14 @@ module KubernetesCookbook
   class KubeProxy < Chef::Resource
     resource_name :kube_proxy
 
-    property :version, String, default: '1.7.5'
+    property :version, String, default: '1.7.6'
     property :remote, String,
       default: lazy { |r|
         'https://storage.googleapis.com/kubernetes-release' \
         "/release/v#{r.version}/bin/linux/amd64/kube-proxy"
       }
     property :checksum, String,
-      default: 'd51441ece8b98a851190736e0a0bf1eb388a55c3e5653267cec76f90b33c6a59'
+      default: 'f9298a5b9e0a9fe3891f7a35bc13c012f1d9530f8a755b9038d3810873a2a843'
     property :file_ulimit, Integer, default: 65536
 
     default_action :create

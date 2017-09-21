@@ -5,14 +5,14 @@ module KubernetesCookbook
   class KubeletService < Chef::Resource
     resource_name :kubelet_service
 
-    property :version, String, default: '1.7.5'
+    property :version, String, default: '1.7.6'
     property :remote, String,
       default: lazy { |r|
         'https://storage.googleapis.com/kubernetes-release' \
         "/release/v#{r.version}/bin/linux/amd64/kubelet"
       }
     property :checksum, String,
-      default: '2ca46b4a9e6f1771d6d2ad529f525bc3154e4e13f31e265e1923a832eed11ab5'
+      default: '6178cb17d3c34ebe31dfc572d17ae077ce19d2a936bbe90999bac87ebf6e06eb'
     property :container_runtime_service, String, default: 'docker.service'
     property :run_user, String, default: 'kubernetes'
     property :file_ulimit, Integer, default: 65536

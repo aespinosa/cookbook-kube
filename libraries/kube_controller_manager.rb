@@ -5,14 +5,14 @@ module KubernetesCookbook
   class KubeControllerManager < Chef::Resource
     resource_name :kube_controller_manager
 
-    property :version, String, default: '1.7.5'
+    property :version, String, default: '1.7.6'
     property :remote, String,
       default: lazy { |r|
         'https://storage.googleapis.com/kubernetes-release' \
         "/release/v#{r.version}/bin/linux/amd64/kube-controller-manager"
       }
     property :checksum, String,
-      default: '448f3d34b92f2070632e2a503e5cfa6b36109bc23ac62157f6c1efa107f783c9'
+      default: 'ec1c6fada5a4d5136678f25e35d273cb3f871a50ed9b06fad6b9d08ab12153ed'
     property :run_user, String, default: 'kubernetes'
     property :file_ulimit, Integer, default: 65536
 
