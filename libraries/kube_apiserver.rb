@@ -142,7 +142,7 @@ module KubernetesCookbook
     property :kubelet_client_certificate
     property :kubelet_client_key
     property :kubelet_https, default: true
-    property :kubelet_preferred_address_type, default: ['Hostname','InternalDNS','InternalIP','ExternalDNS','ExternalIP']
+    property :kubelet_preferred_address_type, default: %w(Hostname InternalDNS InternalIP ExternalDNS ExternalIP)
     property :kubelet_port, default: 10_255
     property :kubelet_timeout, default: '5s'
     property :kubernetes_service_node_port
