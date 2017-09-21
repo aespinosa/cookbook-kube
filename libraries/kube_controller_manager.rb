@@ -71,10 +71,13 @@ module KubernetesCookbook
   end
 
   # Commandline properties for the Controller Manager
-  # Reference: http://kubernetes.io/docs/admin/kube-controller-manager/
+  # Reference: https://kubernetes.io/docs/admin/kube-controller-manager/
   class KubeControllerManager
     property :address, default: '0.0.0.0'
     property :allocate_node_cidrs
+    property :attach_detach_reconcile_sync_period, default: '1m0s'
+    property :azure_container_registry_config
+    property :cidr_allocator_type, default: 'RangeAllocator'
     property :cloud_config
     property :cloud_provider
     property :cluster_cidr
@@ -91,18 +94,23 @@ module KubernetesCookbook
     property :concurrent_service_syncs, default: 1
     property :concurrent_serviceaccount_token_syncs, default: 5
     property :configure_cloud_routes, default: true
+    property :contention_profiling
     property :controller_start_interval
-    property :daemonset_lookup_cache_size, default: 1024
-    property :deleting_pods_burst, default: 0
-    property :deleting_pods_qps, default: 0.1
+    property :controllers
     property :deployment_controller_sync_period, default: '30s'
+    property :disable_attach_detach_reconcile_sync, default: '1m0s'
     property :enable_dynamic_provisioning, default: true
     property :enable_garbage_collector, default: true
     property :enable_hostpath_provisioner
+    property :enable_taint_manager, default: true
+    property :experimental_cluster_signing_duration, default: '8760h0m0s'
     property :feature_gates
     property :flex_volume_plugin_dir, default: '/usr/libexec/kubernetes/kubelet-plugins/volume/exec/'
     property :google_json_key
+    property :horizontal_pod_autoscaler_downscale_delay, default: '5m0s'
     property :horizontal_pod_autoscaler_sync_period, default: '30s'
+    property :horizontal_pod_autoscaler_upscale_delay, default: '3m0s'
+    property :horizontal_pod_autoscaler_use_rest_clients
     property :insecure_experimental_approve_all_kubelet_csrs_for_group
     property :kube_api_burst, default: 30
     property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
@@ -112,6 +120,7 @@ module KubernetesCookbook
     property :leader_elect, default: true
     property :leader_elect_lease_duration, default: '15s'
     property :leader_elect_renew_deadline, default: '10s'
+    property :leader_elect_resource_lock, default: 'endpoints'
     property :leader_elect_retry_period, default: '2s'
     property :log_flush_frequency, default: '5s'
     property :master
@@ -122,7 +131,6 @@ module KubernetesCookbook
     property :node_monitor_grace_period, default: '40s'
     property :node_monitor_period, default: '5s'
     property :node_startup_grace_period, default: '1m0s'
-    property :node_sync_period, default: '10s'
     property :pod_eviction_timeout, default: '5m0s'
     property :port, default: 10_252
     property :profiling, default: true
@@ -133,16 +141,16 @@ module KubernetesCookbook
     property :pv_recycler_pod_template_filepath_nfs
     property :pv_recycler_timeout_increment_hostpath, default: 30
     property :pvclaimbinder_sync_period, default: '15s'
-    property :replicaset_lookup_cache_size, default: 4096
-    property :replication_controller_lookup_cache_size, default: 4096
     property :resource_quota_sync_period, default: '5m0s'
     property :root_ca_file
+    property :route_reconciliation_period, default: '10s'
     property :secondary_node_eviction_rate, default: 0.01
     property :service_account_private_key_file
     property :service_cluster_ip_range
     property :service_sync_period, default: '5m0s'
     property :terminated_pod_gc_threshold, default: 12_500
     property :unhealthy_zone_threshold, default: 0.55
+    property :use_service_account_credentials
 
     property :v, default: 0
   end
