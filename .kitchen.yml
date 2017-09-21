@@ -14,7 +14,7 @@ provisioner:
 platforms:
   - name: debian-8
   - name: debian-9
-  - name: ubuntu-1604
+  - name: ubuntu-16.04
 
 suites:
   - name: default
