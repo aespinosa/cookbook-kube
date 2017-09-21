@@ -26,10 +26,12 @@ group 'docker' do
 end
 
 kube_scheduler 'default' do
+  master '127.0.0.1:8080' # make sure to include the port!
   action %w(create start)
 end
 
 kube_controller_manager 'default' do
+  master '127.0.0.1:8080' # make sure to include the port!
   action %w(create start)
 end
 
@@ -56,7 +58,6 @@ end # needed by kubelet_service[default]
 kubelet_service 'default' do
   api_servers 'http://127.0.0.1:8080'
   pod_manifest_path '/etc/kubernetes/manifests'
-  network_plugin 'kubenet'
   pod_cidr '10.180.1.0/24'
   cluster_dns '10.0.0.10'
   cluster_domain 'cluster.local'

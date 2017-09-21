@@ -123,7 +123,7 @@ module KubernetesCookbook
     property :leader_elect_resource_lock, default: 'endpoints'
     property :leader_elect_retry_period, default: '2s'
     property :log_flush_frequency, default: '5s'
-    property :master
+    property :master, required: true
     property :min_resync_period, default: '12h0m0s'
     property :namespace_sync_period, default: '5m0s'
     property :node_cidr_mask_size, default: 24

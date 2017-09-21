@@ -88,7 +88,7 @@ module KubernetesCookbook
     property :leader_elect_retry_period, default: '2s'
     property :lock_object_name, default: 'kube-scheduler'
     property :lock_object_namespace, default: 'kube-system'
-    property :master
+    property :master, required: true
     property :policy_config_file
     property :policy_configmap
     property :policy_configmap_namespace, default: 'kube-system'
