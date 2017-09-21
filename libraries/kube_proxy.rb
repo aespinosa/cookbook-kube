@@ -87,7 +87,7 @@ module KubernetesCookbook
     property :kube_api_qps, default: 5
     property :kubeconfig
     property :masquerade_all
-    property :master
+    property :master, required: true
     property :oom_score_adj, default: -999
     property :proxy_mode
     property :profiling

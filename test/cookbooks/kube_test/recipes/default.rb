@@ -64,6 +64,7 @@ kubelet_service 'default' do
 end
 
 kube_proxy 'default' do
+  master '127.0.0.1:8080' # make sure to include the port!
   action %w(create start)
 end
 
