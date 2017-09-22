@@ -32,9 +32,9 @@ module KubernetesCookbook
 
       pkgs = case node['platform_family']
              when 'debian'
-               %w(iptables iproute2 socat util-linux mount ebtables)
+               %w(iptables iproute2 socat util-linux mount ebtables ethtool)
              when 'rhel', 'fedora', 'amazon'
-               %w(socat shadow-utils conntrack-tools)
+               %w(socat shadow-utils conntrack-tools ethtool)
              else
                %w()
              end
