@@ -4,12 +4,19 @@ The kube cookbook is a Library cookbook that provides custom resources for manag
 
 ## Requirements
 
+### Chef
+
 - Chef 12.11 or higher
-- Network accessible web server hosting the Kubernetes binaries.
 
-## Cookbook Dependencies
+### Platforms
 
-None
+- Ubuntu 16.04+
+- Debian 8+
+- RHEL 7+
+
+### Cookbook Dependencies
+
+- None
 
 ## Usage
 

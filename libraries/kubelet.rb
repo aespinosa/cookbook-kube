@@ -30,7 +30,16 @@ module KubernetesCookbook
         checksum new_resource.checksum
       end
 
-      package %w(iptables iproute2 socat util-linux mount ebtables)
+      pkgs = case node['platform_family']
+             when 'debian'
+               %w(iptables iproute2 socat util-linux mount ebtables)
+             when 'rhel', 'fedora', 'amazon'
+               %w(socat shadow-utils conntrack-tools)
+             else
+               %w()
+             end
+
+      package pkgs
     end
 
     action :start do
