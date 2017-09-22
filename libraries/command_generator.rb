@@ -21,7 +21,7 @@ module KubernetesCookbook
 
     def non_commandline_property?(property)
       [
-        :name, :run_user, :remote, :checksum,
+        :name, :run_user, :remote, :checksum, :version,
         :container_runtime_service, :file_ulimit
       ].include? property
     end
