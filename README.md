@@ -33,10 +33,12 @@ kube_apiserver 'default' do
 end
 
 kube_scheduler 'default' do
+  master '127.0.0.1:8080'
   action %w(create start)
 end
 
 kube_controller_manager 'default' do
+  master '127.0.0.1:8080'
   action %w(create start)
 end
 
@@ -51,6 +53,7 @@ kubelet_service 'default' do
 end
 
 kube_proxy 'default' do
+  master '127.0.0.1:8080'
   action %w(create start)
 end
 ```
