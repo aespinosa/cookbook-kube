@@ -18,18 +18,21 @@ module KubernetesCookbook
   class KubeScheduler < Chef::Resource
     resource_name :kube_scheduler
 
+    property :version, String, default: '1.7.6'
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.4.0/bin/linux/amd64/kube-scheduler'
+      default: lazy { |r|
+        'https://storage.googleapis.com/kubernetes-release' \
+        "/release/v#{r.version}/bin/linux/amd64/kube-scheduler"
+      }
     property :checksum, String,
-      default: '81c58a78e25ddfa3273ed2cef89c567f'\
-               '759efd5c5f1489cef267b0ded856c4c7'
+      default: '391b105aa43143120960c7be8312b6685f2008ea5c21e1360610c1677752549c'
     property :run_user, String, default: 'kubernetes'
+    property :file_ulimit, Integer, default: 65536
 
     default_action :create
 
     action :create do
-      remote_file 'kube-scheduler binary' do
+      remote_file "kube-scheduler binary version: #{new_resource.version}" do
         path scheduler_path
         mode '0755'
         source new_resource.remote
@@ -40,19 +43,30 @@ module KubernetesCookbook
     action :start do
       user 'kubernetes' do
         action :create
-        only_if { run_user == 'kubernetes' }
+        only_if { new_resource.run_user == 'kubernetes' }
       end
 
-      template '/etc/systemd/system/kube-scheduler.service' do
-        source 'systemd/kube-scheduler.service.erb'
-        cookbook 'kube'
-        variables kube_scheduler_command: generator.generate
-        notifies :run, 'execute[systemctl daemon-reload]', :immediately
-      end
+      systemd_contents = {
+        Unit: {
+          Description: 'Kubernetes Scheduler Plugin',
+          Documentation: 'https://k8s.io',
+          After: 'network.target',
+        },
+        Service: {
+          User: new_resource.run_user,
+          ExecStart: generator.generate,
+          Restart: 'on-failure',
+          LimitNOFILE: new_resource.file_ulimit,
+        },
+        Install: {
+          WantedBy: 'multi-user.target',
+        },
+      }
 
-      execute 'systemctl daemon-reload' do
-        command 'systemctl daemon-reload'
-        action :nothing
+      systemd_unit 'kube-scheduler.service' do
+        content(systemd_contents)
+        action :create
+        notifies :restart, 'service[kube-scheduler]', :immediately
       end
 
       service 'kube-scheduler' do
@@ -70,16 +84,14 @@ module KubernetesCookbook
   end
 
   # scheduler commandline flags
-  # Reference: http://kubernetes.io/docs/admin/kube-scheduler/
+  # Reference: https://kubernetes.io/docs/admin/kube-scheduler/
   class KubeScheduler
     property :address, default: '0.0.0.0'
     property :algorithm_provider, default: 'DefaultProvider'
-    property :bind_pods_burst, default: 100
-    property :bind_pods_qps, default: 50
-    property :failure_domains, default: 'kubernetes.io/hostname,failure-domain.beta.kubernetes.io/zone,failure-domain.beta.kubernetes.io/region'
+    property :azure_container_registry_config
+    property :contention_profiling
     property :feature_gates
     property :google_json_key
-    property :hard_pod_affinity_symmetric_weight, default: 1
     property :kube_api_burst, default: 100
     property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
     property :kube_api_qps, default: 50
@@ -87,13 +99,18 @@ module KubernetesCookbook
     property :leader_elect, default: true
     property :leader_elect_lease_duration, default: '15s'
     property :leader_elect_renew_deadline, default: '10s'
+    property :leader_elect_resource_lock
     property :leader_elect_retry_period, default: '2s'
-    property :log_flush_frequency, default: '5s'
-    property :master
+    property :lock_object_name, default: 'kube-scheduler'
+    property :lock_object_namespace, default: 'kube-system'
+    property :master, required: true
     property :policy_config_file
+    property :policy_configmap
+    property :policy_configmap_namespace, default: 'kube-system'
     property :port, default: 10_251
     property :profiling, default: true
     property :scheduler_name, default: 'default-scheduler'
+    property :use_legacy_policy_config
 
     property :v, default: 0
   end

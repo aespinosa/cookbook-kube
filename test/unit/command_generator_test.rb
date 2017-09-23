@@ -54,6 +54,7 @@ class CommandGeneratorTest < Minitest::Test
       run_user 'another-user'
       remote 'a-url'
       checksum 'a-checksum'
+      version 'some-version'
       # commandline flag
       admission_control %w(AlwaysDeny ServiceQuota)
     end
@@ -71,7 +72,7 @@ class CommandGeneratorTest < Minitest::Test
     resource do
       service_cluster_ip_range '10.0.0.1/24'
       insecure_bind_address '0.0.0.0'
-      etcd_servers 'http://127.0.0.1:4001'
+      etcd_servers 'http://127.0.0.1:2379'
       admission_control %w(NamespaceLifecycle LimitRanger SecurityContextDeny ServiceAccount ResourceQuota)
       client_ca_file '/srv/kubernetes/ca.crt'
       basic_auth_file '/srv/kubernetes/basic_auth.csv'

@@ -5,13 +5,19 @@ managing various components of a Kubernetes cluster.
 
 ## Requirements
 
-* Chef 12.5 or higher. Chef 11 and 12.0-12.4 is NOT SUPPORTED.  Please do not
-  open issues about it.
-* Network accessible web server hosting the Kubernetes binaries.
+### Chef
 
-## Cookbook Dependencies
+* Chef 12.11 or higher
 
-None
+### Platforms
+
+* Ubuntu 16.04+
+* Debian 8+
+* RHEL 7+
+
+### Cookbook Dependencies
+
+- None
 
 ## Usage
 
@@ -19,20 +25,22 @@ None
 * Use the resources shipped in this cookbook in your recipes the same way you
   use core Chef resources like file, template, directory, package, etc.
 
-```
+```ruby
 # Master
 kube_apiserver 'default' do
   service_cluster_ip_range '10.0.0.1/24'
-  etcd_servers 'http://127.0.0.1:4001'
+  etcd_servers 'http://127.0.0.1:2379'
   insecure_bind_address '0.0.0.0' # for convenience
   action %w(create start)
 end
 
 kube_scheduler 'default' do
+  master '127.0.0.1:8080'
   action %w(create start)
 end
 
 kube_controller_manager 'default' do
+  master '127.0.0.1:8080'
   action %w(create start)
 end
 
@@ -47,11 +55,12 @@ kubelet_service 'default' do
 end
 
 kube_proxy 'default' do
+  master '127.0.0.1:8080'
   action %w(create start)
 end
 ```
 
-The test cookbook ran under test-kitchen provide good usage examples.   It is
+The test cookbook ran under test-kitchen provide good usage examples.  It is
 found in `test/cookbooks/kube_test`.
 
 ## Resources Overview
@@ -72,11 +81,16 @@ Components for a Kubernetes master:
 All the above resources will contain the following properties:
 
 * `remote` - The URL of where a corresponding component's binary can be
-  downloaded.  The default value points to the official Kubernetes release URL
-  of each component.  Check each resource for the default value of each
-  component.
+  downloaded.  The default value points to the official Kubernetes release URL of
+  each component.  Check each resource for the default value of each component.
+* `version` - The version of the Kubernetes artifact to pull down.  Defaults to
+  `'1.7.5'`.  NOTE: This will be ignored if you set the `remote` property
+  instead.
 * `checksum` - The SHA256 hash of the Kubernetes component's binary.
-* `run_user` - The user in which to run the Kubernetes user.  Defaults to `'kubernetes'`.
+* `run_user` - The user in which to run the Kubernetes user.  Defaults to
+  `'kubernetes'`.
+* `file_ulimit` - The file ulimit value to set for the services - Integer.
+  Defaults to `65536`
 
 ### Common Actions
 
@@ -90,14 +104,14 @@ All the above resources will contain the following actions:
 Each resource' set of unique properties corresponds to the options in the
 Kubernetes component they represent:
 
-* `kube_apiserver` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kube-apiserver.md>
-* `kube_controller_manager` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kube-controller-manager.md>
-* `kube_scheduler` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kube-scheduler.md>
-* `kubelet` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kubelet.md>
-* `kube_proxy` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.4/docs/admin/kube-proxy.md>
+* `kube_apiserver` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.7/docs/admin/kube-apiserver.md>
+* `kube_controller_manager` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.7/docs/admin/kube-controller-manager.md>
+* `kube_scheduler` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.7/docs/admin/kube-scheduler.md>
+* `kubelet` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.7/docs/admin/kubelet.md>
+* `kube_proxy` - <https://github.com/kubernetes/kubernetes.github.io/blob/release-1.7/docs/admin/kube-proxy.md>
 
-In general, a command line flag of the form `--long-option` will correspond to
-a custom resource property called `long_option`.
+In general, a command line flag of the form `--long-option` will correspond to a
+custom resource property called `long_option`.
 
 ### Extending Properties
 
@@ -106,7 +120,7 @@ deprecate some commandline flags that are not yet hard-coded as properties.
 
 To add these properties, a wrapper cookbook can be written like the following:
 
-```
+```ruby
 # wrapper-cookbook/metadata.rb
 name 'wrapper-cookbook'
 depends 'kube', '~> 2.0' # Make sure you have this
@@ -117,10 +131,10 @@ class KubernetesCookbook::KubeApiserver
 end
 ```
 
-The `kube_apiserver` resource can now use the new commandline flag available
-in Kubernetes v9000 like the following:
+The `kube_apiserver` resource can now use the new commandline flag available in
+Kubernetes v9000 like the following:
 
-```
+```ruby
 # wrapper-cookbook/recipes/default.rb
 kube_apiserver 'default' do
   something_only_in_kubernetes9000 'someflag'

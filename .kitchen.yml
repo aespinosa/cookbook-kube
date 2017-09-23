@@ -7,14 +7,15 @@
 
 verifier:
   name: inspec
-  format: doc
 
 provisioner:
   name: chef_zero
-  require_chef_omnibus: true
 
 platforms:
-  - name: debian-8.7
+  - name: debian-8 # won't work out of the box: https://github.com/kubernetes/kubernetes/issues/23816
+  - name: debian-9
+  - name: ubuntu-16.04
+  - name: centos-7
 
 suites:
   - name: default

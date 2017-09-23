@@ -18,17 +18,20 @@ module KubernetesCookbook
   class KubeProxy < Chef::Resource
     resource_name :kube_proxy
 
+    property :version, String, default: '1.7.6'
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.4.0/bin/linux/amd64/kube-proxy'
+      default: lazy { |r|
+        'https://storage.googleapis.com/kubernetes-release' \
+        "/release/v#{r.version}/bin/linux/amd64/kube-proxy"
+      }
     property :checksum, String,
-      default: '3cebe9f93af9fa7a2351012cc209b679' \
-               '3d251b3679fe8e7d344a9eb79f9e6a2e'
+      default: 'f9298a5b9e0a9fe3891f7a35bc13c012f1d9530f8a755b9038d3810873a2a843'
+    property :file_ulimit, Integer, default: 65536
 
     default_action :create
 
     action :create do
-      remote_file 'kube-proxy binary' do
+      remote_file "kube-proxy binary version: #{new_resource.version}" do
         path proxy_path
         mode '0755'
         source new_resource.remote
@@ -37,16 +40,26 @@ module KubernetesCookbook
     end
 
     action :start do
-      template '/etc/systemd/system/kube-proxy.service' do
-        source 'systemd/kube-proxy.service.erb'
-        cookbook 'kube'
-        variables kube_proxy_command: generator.generate
-        notifies :run, 'execute[systemctl daemon-reload]', :immediately
-      end
+      systemd_contents = {
+        Unit: {
+          Description: 'Kubernetes Kube-Proxy Server',
+          Documentation: 'https://k8s.io',
+          After: 'network.target',
+        },
+        Service: {
+          ExecStart: generator.generate,
+          Restart: 'on-failure',
+          LimitNOFILE: new_resource.file_ulimit,
+        },
+        Install: {
+          WantedBy: 'multi-user.target',
+        },
+      }
 
-      execute 'systemctl daemon-reload' do
-        command 'systemctl daemon-reload'
-        action :nothing
+      systemd_unit 'kube-proxy.service' do
+        content(systemd_contents)
+        action :create
+        notifies :restart, 'service[kube-proxy]', :immediately
       end
 
       service 'kube-proxy' do
@@ -64,33 +77,37 @@ module KubernetesCookbook
   end
 
   # Command line properties for the kube-proxy
-  # Reference: http://kubernetes.io/docs/admin/kube-proxy/
+  # Reference: https://kubernetes.io/docs/admin/kube-proxy/
   class KubeProxy
+    property :azure_container_registry_config
     property :bind_address, default: '0.0.0.0'
     property :cleanup_iptables
     property :cluster_cidr
+    property :config
     property :config_sync_period, default: '15m0s'
-    property :conntrack_max, default: 0
     property :conntrack_max_per_core, default: 32_768
+    property :conntrack_min, default: 131_072
+    property :conntrack_tcp_timeout_close_wait, default: '1h0m0s'
     property :conntrack_tcp_timeout_established, default: '24h0m0s'
     property :feature_gates
     property :google_json_key
-    property :healthz_bind_address, default: '127.0.0.1'
+    property :healthz_bind_address, default: '0.0.0.0:10256'
     property :healthz_port, default: 10_249
     property :hostname_override
     property :iptables_masquerade_bit, default: 14
+    property :iptables_min_sync_period
     property :iptables_sync_period, default: '30s'
     property :kube_api_burst, default: 10
     property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
     property :kube_api_qps, default: 5
     property :kubeconfig
-    property :log_flush_frequency, default: '5s'
     property :masquerade_all
-    property :master
+    property :master, required: true
     property :oom_score_adj, default: -999
     property :proxy_mode
+    property :profiling
+    property :proxy_mode
     property :proxy_port_range
-    property :resource_container, default: '/kube_proxy'
     property :udp_timeout, default: '250ms'
 
     property :v, default: 0
