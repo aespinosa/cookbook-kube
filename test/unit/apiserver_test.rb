@@ -81,9 +81,9 @@ class ActionCreateTest < Minitest::Test
 
     provider.action_create
 
-    binary = provider.inline_resources.find 'remote_file[kube-apiserver binary]'
+    binary = provider.inline_resources.find 'remote_file[kube-apiserver binary version: 1.7.6]'
 
-    assert_equal 'https:///kube-apiserver', binary.source
+    assert_equal 'https://somewhere/kube-apiserver', binary.source[0]
   end
 
   def test_passes_the_checksum
@@ -93,7 +93,7 @@ class ActionCreateTest < Minitest::Test
 
     provider.action_create
 
-    binary = provider.inline_resources.find 'remote_file[kube-apiserver binary]'
+    binary = provider.inline_resources.find 'remote_file[kube-apiserver binary version: 1.7.6]'
 
     assert_equal 'the-checksum', binary.checksum
   end
@@ -104,10 +104,9 @@ class ActionStartTest < Minitest::Test
 
   def test_passes_apiserver_command_to_systemd_unit
     provider.action_start
-    unit = provider.inline_resources.find 'template[/etc/systemd/system'\
-        '/kube-apiserver.service]'
+    unit = provider.inline_resources.find 'systemd_unit[kube-apiserver.service]'
 
-    command = unit.variables[:kube_apiserver_command]
+    command = unit.content[:Service][:ExecStart]
     assert_equal '/usr/sbin/kube-apiserver', command
   end
 end
