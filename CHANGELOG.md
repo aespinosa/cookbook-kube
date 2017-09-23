@@ -1,3 +1,11 @@
+# 3.0.0
+
+* Use kubernetes 1.7.6 by default.
+* Add the `:version` property to pull version binaries upstream.
+* Support other systemd-based platforms like CentOS and Ubuntu.
+* Bump the minimum version required for the chef-client.
+* Document how to anticipate newer versions of Kubernetes.
+
 # 2.0.3
 
 * Bump more metadata to pass Supermarket quality metrics.
