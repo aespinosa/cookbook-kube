@@ -4,8 +4,8 @@ remote_file 'kubectl binary' do
   path '/usr/bin/kubectl'
   mode '0755'
   source 'https://storage.googleapis.com/kubernetes-release/release'\
-         '/v1.7.6/bin/linux/amd64/kubectl'
-  checksum '32d85c8f38aded3466a36f0d94906c5174eb4076a5f23b7187b8f77ecdd75834'
+         '/v1.9.2/bin/linux/amd64/kubectl'
+  checksum '455999c8232c57748f4cee4b5446ee39fe8af093434d732ddcd628a02f3d9118'
 end
 
 # Master
@@ -41,14 +41,6 @@ if platform_family?('debian')
   package 'apt-transport-https'
 
   apt_update
-
-  include_recipe 'chef-apt-docker::default'
-end
-
-include_recipe 'chef-yum-docker::default' if platform_family?('rhel')
-
-directory '/etc/kubernetes/manifests' do
-  recursive true
 end
 
 docker_service 'default' do
@@ -74,6 +66,9 @@ kube_proxy 'default' do
 end
 
 # test running a sample pod
+directory '/etc/kubernetes/manifests' do
+  recursive true
+end
 
 t = template '/etc/kubernetes/manifests/busybox.yaml'
 
