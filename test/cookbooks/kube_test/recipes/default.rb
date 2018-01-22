@@ -41,14 +41,6 @@ if platform_family?('debian')
   package 'apt-transport-https'
 
   apt_update
-
-  include_recipe 'chef-apt-docker::default'
-end
-
-include_recipe 'chef-yum-docker::default' if platform_family?('rhel')
-
-directory '/etc/kubernetes/manifests' do
-  recursive true
 end
 
 docker_service 'default' do
