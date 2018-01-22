@@ -6,6 +6,9 @@
 *.un~
 pkg/
 
+# policyfile
+Policyfile.lock.json
+
 # Berkshelf
 .vagrant
 /cookbooks
