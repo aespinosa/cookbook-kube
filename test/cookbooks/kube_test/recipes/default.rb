@@ -74,6 +74,9 @@ kube_proxy 'default' do
 end
 
 # test running a sample pod
+directory '/etc/kubernetes/manifests' do
+  recursive true
+end
 
 t = template '/etc/kubernetes/manifests/busybox.yaml'
 
