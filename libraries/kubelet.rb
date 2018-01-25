@@ -32,9 +32,6 @@ module KubernetesCookbook
     property :run_user, String, default: 'kubernetes'
     property :file_ulimit, Integer, default: 65536
 
-    # Reference: http://kubernetes.io/docs/admin/kubelet/
-    property :api_servers
-
     default_action :create
 
     action :create do
