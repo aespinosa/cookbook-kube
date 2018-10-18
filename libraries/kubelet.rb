@@ -136,6 +136,7 @@ module KubernetesCookbook
     property :cluster_domain
     property :cni_bin_dir, default: '/opt/cni/bin'
     property :cni_conf_dir, default: '/etc/cni/net.d'
+    property :config
     property :container_runtime, default: 'docker'
     property :container_runtime_endpoint, default: 'unix:///var/run/dockershim.sock'
     property :containerized, default: false
