@@ -131,6 +131,7 @@ module KubernetesCookbook
     property :cors_allowed_origins, default: []
     property :delete_collection_workers, default: 1
     property :deserialization_cache_size, default: 50_000
+    property :enable_admission_plugins
     property :enable_aggregator_routing
     property :enable_garbage_collector, default: true
     property :enable_logs_handler, default: true
