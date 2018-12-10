@@ -226,6 +226,7 @@ module KubernetesCookbook
     property :rkt_path
     property :rkt_stage1_image
     property :root_dir, default: '/var/lib/kubelet'
+    property :rotate_certificates
     property :runonce
     property :runtime_cgroups
     property :runtime_request_timeout, default: '2m0s'
