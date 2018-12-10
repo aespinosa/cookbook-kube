@@ -44,7 +44,7 @@ module KubernetesCookbook
     def list_commandline_flag_properties
       @resource.class.properties.reject do |property, description|
         value = @resource.send(property)
-        non_commandline_property?(property) || (value == description.default)
+        non_commandline_property?(property)
       end
     end
   end
