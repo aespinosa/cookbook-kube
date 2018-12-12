@@ -34,7 +34,7 @@ module KubernetesCookbook
     default_action :create
 
     action :create do
-      remote_file "kube-controller-manager version: #{new_resource.version}" do
+      remote_file 'kube-controller-manager binary' do
         path controller_manager_path
         mode '0755'
         source new_resource.remote
@@ -138,7 +138,7 @@ module KubernetesCookbook
     property :leader_elect_resource_lock, default: 'endpoints'
     property :leader_elect_retry_period, default: '2s'
     property :log_flush_frequency, default: '5s'
-    property :master, required: true
+    property :master
     property :min_resync_period, default: '12h0m0s'
     property :namespace_sync_period, default: '5m0s'
     property :node_cidr_mask_size, default: 24

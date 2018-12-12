@@ -36,10 +36,9 @@ class ControllerManagerActionTest < Minitest::Test
   def test_passes_scheduler_command_to_systemd
     provider.action_start
 
-    unit = provider.inline_resources.find 'template[/etc/systemd/system'\
-        '/kube-controller-manager.service]'
+    unit = provider.inline_resources.find 'systemd_unit[kube-controller-manager.service]'
 
-    command = unit.variables[:kube_controller_manager_command]
+    command = unit.content[:Service][:ExecStart]
     assert_equal '/usr/sbin/kube-controller-manager', command
   end
 

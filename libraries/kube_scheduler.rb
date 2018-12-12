@@ -32,7 +32,7 @@ module KubernetesCookbook
     default_action :create
 
     action :create do
-      remote_file "kube-scheduler binary version: #{new_resource.version}" do
+      remote_file 'kube-scheduler binary' do
         path scheduler_path
         mode '0755'
         source new_resource.remote
@@ -103,7 +103,7 @@ module KubernetesCookbook
     property :leader_elect_retry_period, default: '2s'
     property :lock_object_name, default: 'kube-scheduler'
     property :lock_object_namespace, default: 'kube-system'
-    property :master, required: true
+    property :master
     property :policy_config_file
     property :policy_configmap
     property :policy_configmap_namespace, default: 'kube-system'

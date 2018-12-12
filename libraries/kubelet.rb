@@ -35,7 +35,7 @@ module KubernetesCookbook
     default_action :create
 
     action :create do
-      remote_file "kubelet binary version: #{new_resource.version}" do
+      remote_file 'kubelet binary' do
         path kubelet_path
         mode '0755'
         source new_resource.remote

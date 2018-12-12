@@ -40,10 +40,9 @@ class KubeletActionStartTest < Minitest::Test
   def test_passes_scheduler_command_to_systemd
     provider.action_start
 
-    unit = provider.inline_resources.find 'template[/etc/systemd/system'\
-        '/kubelet.service]'
+    unit = provider.inline_resources.find 'systemd_unit[kubelet.service]'
 
-    command = unit.variables[:kubelet_command]
+    command = unit.content[:Service][:ExecStart]
     assert_equal '/usr/sbin/kubelet', command
   end
 
@@ -51,10 +50,9 @@ class KubeletActionStartTest < Minitest::Test
     provider.new_resource.api_servers 'http://127.0.0.1:8080'
     provider.action_start
 
-    unit = provider.inline_resources.find 'template[/etc/systemd/system'\
-        '/kubelet.service]'
+    unit = provider.inline_resources.find 'systemd_unit[kubelet.service]'
 
-    command = unit.variables[:kubelet_command]
+    command = unit.content[:Service][:ExecStart]
     assert_match %r{--api-servers=http://127.0.0.1:8080},
                  command
   end
@@ -64,10 +62,9 @@ class KubeletActionStartTest < Minitest::Test
             .api_servers %w(http://127.0.0.1:8080 https://10.0.0.1:6443)
     provider.action_start
 
-    unit = provider.inline_resources.find 'template[/etc/systemd/system'\
-        '/kubelet.service]'
+    unit = provider.inline_resources.find 'systemd_unit[kubelet.service]'
 
-    command = unit.variables[:kubelet_command]
+    command = unit.content[:Service][:ExecStart]
 
     assert_match %r{--api-servers=http://127.0.0.1:8080,https://10.0.0.1:6443},
                  command

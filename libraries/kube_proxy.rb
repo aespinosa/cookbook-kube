@@ -31,7 +31,7 @@ module KubernetesCookbook
     default_action :create
 
     action :create do
-      remote_file "kube-proxy binary version: #{new_resource.version}" do
+      remote_file 'kube-proxy binary' do
         path proxy_path
         mode '0755'
         source new_resource.remote
@@ -102,7 +102,7 @@ module KubernetesCookbook
     property :kube_api_qps, default: 5
     property :kubeconfig
     property :masquerade_all
-    property :master, required: true
+    property :master
     property :oom_score_adj, default: -999
     property :proxy_mode
     property :profiling
