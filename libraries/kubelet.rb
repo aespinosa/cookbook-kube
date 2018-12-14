@@ -191,7 +191,7 @@ module KubernetesCookbook
     property :kube_api_qps, default: 5
     property :kube_reserved
     property :kube_reserved_cgroup
-    property :kubeconfig, default: '/var/lib/kubelet/kubeconfig'
+    property :kubeconfig
     property :kubelet_cgroups
     property :lock_file
     property :make_iptables_util_chains, default: true
