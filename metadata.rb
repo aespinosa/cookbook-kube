@@ -16,4 +16,4 @@ supports 'centos', '>= 7.0'
 supports 'scientific', '>= 7.0'
 supports 'redhat', '>= 7.0'
 
-version '3.0.0'
+version '4.0.0'

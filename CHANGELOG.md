@@ -1,3 +1,9 @@
+# 4.0.0
+
+* Add kubernetes 1.12 options
+* Remove default value for kubeconfig  
+* Add --rotate-certificates in kubelet
+
 # 3.0.0
 
 * Use kubernetes 1.7.6 by default.
