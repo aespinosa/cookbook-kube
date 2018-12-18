@@ -1,0 +1,8 @@
+---
+steps:
+  - name: chef/chefdk
+    args: ['chef', 'exec', 'bundle', 'install']
+  - name: chef/chefdk
+    args: ['chef', 'exec', 'rake', 'test']
+  - name: chef/chefdk
+    args: ['chef', 'exec', 'rake', 'style']
