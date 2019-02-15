@@ -1,0 +1,30 @@
+---
+driver:
+  name: dokken
+  chef_version: latest
+  pid_one_command: /usr/lib/systemd/systemd
+  privileged: true
+  volumes:
+    - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  intermediate_instructions:
+    - VOLUME /var/lib/docker
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos-7
+    driver:
+      image: dokken/centos-7
+      hostname: default
+        
+suites:
+  - name: default
+    run_list:
+      - recipe[kube_text::default]

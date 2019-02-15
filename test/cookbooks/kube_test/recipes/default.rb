@@ -43,6 +43,10 @@ if platform_family?('debian')
   apt_update
 end
 
+if platform_family?('rhel')
+  package 'e2fsprogs'
+end
+
 docker_service 'default' do
   iptables false
   ip_masq false
