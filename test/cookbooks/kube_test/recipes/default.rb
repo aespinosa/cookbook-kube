@@ -46,7 +46,7 @@ end
 docker_service 'default' do
   iptables false
   ip_masq false
-  storage_driver 'devicemapper'
+  storage_driver node['kube_test']['docker']['storage_driver']
   install_method 'package'
   version '17.06.1'
 end # needed by kubelet_service[default]

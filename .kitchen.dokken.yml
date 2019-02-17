@@ -1,0 +1,64 @@
+---
+driver:
+  name: dokken
+  chef_version: latest
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: debian-8
+    driver:
+      image: dokken/debian-8
+      hostname: default
+      privileged: true
+      pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      intermediate_instructions:
+        - VOLUME /var/lib/docker
+  - name: debian-9
+    driver:
+      image: dokken/debian-9
+      hostname: default
+      privileged: true
+      pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      intermediate_instructions:
+        - VOLUME /var/lib/docker
+  - name: ubuntu-16.04
+    driver:
+      image: dokken/ubuntu-16.04
+      hostname: default
+      privileged: true
+      pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      intermediate_instructions:
+        - VOLUME /var/lib/docker
+  - name: centos-7
+    driver:
+      image: dokken/centos-7
+      hostname: default
+      privileged: true
+      pid_one_command: /lib/systemd/systemd
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      intermediate_instructions:
+        - VOLUME /var/lib/docker
+
+suites:
+  - name: default
+    run_list:
+      - recipe[kube_test::default]
+    attributes:
+      kube_test:
+        docker:
+          storage_driver: overlay2
