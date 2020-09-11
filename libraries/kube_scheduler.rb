@@ -17,6 +17,7 @@ module KubernetesCookbook
   # Resource to manage a scheduler
   class KubeScheduler < Chef::Resource
     resource_name :kube_scheduler
+    provides :kube_scheduler
 
     property :version, String, default: '1.7.6'
     property :remote, String,

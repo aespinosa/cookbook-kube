@@ -17,6 +17,7 @@ module KubernetesCookbook
   # Resource to manage a Kubernetes API server
   class KubeApiserver < Chef::Resource
     resource_name :kube_apiserver
+    provides :kube_apiserver
 
     property :version, String, default: '1.7.6'
     property :remote, String,

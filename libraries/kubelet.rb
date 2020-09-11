@@ -19,6 +19,7 @@ module KubernetesCookbook
   # Resource for instantiating a kubelet
   class KubeletService < Chef::Resource
     resource_name :kubelet_service
+    provides :kubelet_service
 
     property :version, String, default: '1.7.6'
     property :remote, String,

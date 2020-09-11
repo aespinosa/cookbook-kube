@@ -19,6 +19,7 @@ module KubernetesCookbook
   # Resource for managing the Controller Manager
   class KubeControllerManager < Chef::Resource
     resource_name :kube_controller_manager
+    provides :kube_controller_manager
 
     property :version, String, default: '1.7.6'
     property :remote, String,

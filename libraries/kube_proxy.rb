@@ -17,6 +17,7 @@ module KubernetesCookbook
   # Resource for managing a kube-proxy
   class KubeProxy < Chef::Resource
     resource_name :kube_proxy
+    provides :kube_proxy
 
     property :version, String, default: '1.7.6'
     property :remote, String,
