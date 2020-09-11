@@ -1,3 +1,8 @@
+# 5.0.0
+
+* Support Chef Infra Client 16+
+* Drop Chef Infra Client 12-13 support
+
 # 4.0.0
 
 * Add kubernetes 1.12 options

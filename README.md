@@ -7,7 +7,7 @@ managing various components of a Kubernetes cluster.
 
 ### Chef
 
-* Chef 12.11 or higher
+* Chef Infra client 15 or higher
 
 ### Platforms
 
@@ -21,7 +21,7 @@ managing various components of a Kubernetes cluster.
 
 ## Usage
 
-* Add `'kube', '~> 2.0'` to your cookbook's `metadata.rb`.
+* Add `'kube', '~> 5.0'` to your cookbook's `metadata.rb`.
 * Use the resources shipped in this cookbook in your recipes the same way you
   use core Chef resources like file, template, directory, package, etc.
 
@@ -123,7 +123,7 @@ To add these properties, a wrapper cookbook can be written like the following:
 ```ruby
 # wrapper-cookbook/metadata.rb
 name 'wrapper-cookbook'
-depends 'kube', '~> 2.0' # Make sure you have this
+depends 'kube', '~> 5.0' # Make sure you have this
 
 # wrapper-cookbook/libraries/apiserver.rb
 class KubernetesCookbook::KubeApiserver
